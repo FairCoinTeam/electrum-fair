@@ -30,7 +30,7 @@ class Blockchain(util.DaemonThread):
         self.config = config
         self.network = network
         self.lock = threading.Lock()
-        self.headers_url = 'http://headers.electrum.org/blockchain_headers'
+        self.headers_url = 'https://chain.fair-coin.org/download/electrum_headers'
         self.queue = Queue.Queue()
         self.local_height = 0
         self.set_local_height()
@@ -93,8 +93,8 @@ class Blockchain(util.DaemonThread):
             _hash = self.hash_header(header)
             try:
                 assert prev_hash == header.get('prev_block_hash')
-                assert bits == header.get('bits')
-                assert int('0x'+_hash,16) < target
+                #assert bits == header.get('bits')
+                #assert int('0x'+_hash,16) < target
             except Exception:
                 return False
 
@@ -123,9 +123,9 @@ class Blockchain(util.DaemonThread):
             raw_header = data[i*80:(i+1)*80]
             header = self.header_from_string(raw_header)
             _hash = self.hash_header(header)
-            assert previous_hash == header.get('prev_block_hash')
-            assert bits == header.get('bits')
-            assert int('0x'+_hash,16) < target
+            # assert previous_hash == header.get('prev_block_hash')
+            # assert bits == header.get('bits')
+            # assert int('0x'+_hash,16) < target
 
             previous_header = header
             previous_hash = _hash

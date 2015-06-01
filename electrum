@@ -212,7 +212,7 @@ if __name__ == '__main__':
     if len(args) == 0:
         url = None
         cmd = 'gui'
-    elif len(args) == 1 and re.match('^bitcoin:', args[0]):
+    elif len(args) == 1 and re.match('^faircoin:', args[0]):
         url = args[0]
         cmd = 'gui'
     elif len(args) == 1 and args[0] not in known_commands and os.path.exists(args[0]):

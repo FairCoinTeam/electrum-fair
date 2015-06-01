@@ -15,3 +15,6 @@ locale/
 *_trial_temp
 packages
 env/
+.project
+.pydevproject
+.settings

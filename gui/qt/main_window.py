@@ -123,7 +123,7 @@ class ElectrumWindow(QMainWindow):
         self.create_status_bar()
         self.need_update = threading.Event()
 
-        self.decimal_point = config.get('decimal_point', 5)
+        self.decimal_point = config.get('decimal_point', 6)
         self.num_zeros     = int(config.get('num_zeros',0))
 
         self.completions = QStringListModel()
@@ -211,7 +211,7 @@ class ElectrumWindow(QMainWindow):
         self.dummy_address = a[0] if a else None
         self.accounts_expanded = self.wallet.storage.get('accounts_expanded',{})
         self.current_account = self.wallet.storage.get("current_account", None)
-        title = 'Electrum %s  -  %s' % (self.wallet.electrum_version, self.wallet.basename())
+        title = 'Electrum for FairCoin %s  -  %s' % (self.wallet.electrum_version, self.wallet.basename())
         if self.wallet.is_watching_only():
             title += ' [%s]' % (_('watching only'))
         self.setWindowTitle( title )
@@ -493,13 +493,13 @@ class ElectrumWindow(QMainWindow):
 
 
     def base_unit(self):
-        assert self.decimal_point in [2, 5, 8]
+        assert self.decimal_point in [2, 4, 6]
         if self.decimal_point == 2:
             return 'bits'
-        if self.decimal_point == 5:
-            return 'mBTC'
-        if self.decimal_point == 8:
-            return 'BTC'
+        if self.decimal_point == 4:
+            return 'mFAIR'
+        if self.decimal_point == 6:
+            return 'FAIR'
         raise Exception('Unknown base unit')
 
     def update_status(self):
@@ -1091,7 +1091,7 @@ class ElectrumWindow(QMainWindow):
             return
 
         amount = sum(map(lambda x:x[2], outputs))
-        confirm_amount = self.config.get('confirm_amount', 100000000)
+        confirm_amount = self.config.get('confirm_amount', 1000000)
         if amount >= confirm_amount:
             o = '\n'.join(map(lambda x:x[1], outputs))
             if not self.question(_("send %(amount)s to %(address)s?")%{ 'amount' : self.format_amount(amount) + ' '+ self.base_unit(), 'address' : o}):
@@ -2123,7 +2123,7 @@ class ElectrumWindow(QMainWindow):
         if not data:
             return
         # if the user scanned a bitcoin URI
-        if data.startswith("bitcoin:"):
+        if data.startswith("faircoin:"):
             self.pay_from_URI(data)
             return
         # else if the user scanned an offline signed tx
@@ -2194,7 +2194,7 @@ class ElectrumWindow(QMainWindow):
                     errors.append((position, address))
                     continue
                 amount = Decimal(row[1])
-                amount = int(100000000*amount)
+                amount = int(1000000*amount)
                 outputs.append(('address', address, amount))
         except (ValueError, IOError, os.error), reason:
             QMessageBox.critical(None, _("Unable to read file or no transaction found"), _("Electrum was unable to open your transaction file") + "\n" + str(reason))
@@ -2531,24 +2531,24 @@ class ElectrumWindow(QMainWindow):
         fee_e.editingFinished.connect(on_fee)
         widgets.append((fee_label, fee_e, fee_help))
 
-        units = ['BTC', 'mBTC', 'bits']
+        units = ['FAIR', 'mFAIR', 'uFAIR']
         unit_label = QLabel(_('Base unit') + ':')
         unit_combo = QComboBox()
         unit_combo.addItems(units)
         unit_combo.setCurrentIndex(units.index(self.base_unit()))
         msg = _('Base unit of your wallet.')\
-              + '\n1BTC=1000mBTC.\n' \
+              + '\n1FAIR=1000mFAIR.\n' \
               + _(' These settings affects the fields in the Send tab')+' '
         unit_help = HelpButton(msg)
         def on_unit(x):
             unit_result = units[unit_combo.currentIndex()]
             if self.base_unit() == unit_result:
                 return
-            if unit_result == 'BTC':
-                self.decimal_point = 8
-            elif unit_result == 'mBTC':
-                self.decimal_point = 5
-            elif unit_result == 'bits':
+            if unit_result == 'FAIR':
+                self.decimal_point = 6
+            elif unit_result == 'mFAIR':
+                self.decimal_point = 4
+            elif unit_result == 'uFAIR':
                 self.decimal_point = 2
             else:
                 raise Exception('Unknown base unit')

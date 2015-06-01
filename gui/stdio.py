@@ -125,11 +125,11 @@ class ElectrumGui:
                 msg = _( "Synchronizing..." )
             else: 
                 c, u, x =  self.wallet.get_balance()
-                msg = _("Balance")+": %f  "%(Decimal(c) / 100000000)
+                msg = _("Balance")+": %f  "%(Decimal(c) / 1000000)
                 if u:
-                    msg += "  [%f unconfirmed]"%(Decimal(u) / 100000000)
+                    msg += "  [%f unconfirmed]"%(Decimal(u) / 1000000)
                 if x:
-                    msg += "  [%f unmatured]"%(Decimal(x) / 100000000)
+                    msg += "  [%f unmatured]"%(Decimal(x) / 1000000)
         else:
                 msg = _( "Not connected" )
             
@@ -175,15 +175,15 @@ class ElectrumGui:
 
     def do_send(self):
         if not is_valid(self.str_recipient):
-            print(_('Invalid Bitcoin address'))
+            print(_('Invalid FairCoin address'))
             return
         try:
-            amount = int( Decimal( self.str_amount) * 100000000 )
+            amount = int( Decimal( self.str_amount) * 1000000 )
         except Exception:
             print(_('Invalid Amount'))
             return
         try:
-            fee = int( Decimal( self.str_fee) * 100000000 )
+            fee = int( Decimal( self.str_fee) * 1000000 )
         except Exception:
             print(_('Invalid Fee'))
             return

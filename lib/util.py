@@ -93,13 +93,13 @@ def profiler(func):
 
 def user_dir():
     if "HOME" in os.environ:
-        return os.path.join(os.environ["HOME"], ".electrum")
+        return os.path.join(os.environ["HOME"], ".electrum-fair")
     elif "APPDATA" in os.environ:
-        return os.path.join(os.environ["APPDATA"], "Electrum")
+        return os.path.join(os.environ["APPDATA"], "Electrum-Fair")
     elif "LOCALAPPDATA" in os.environ:
-        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum")
+        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum-Fair")
     elif 'ANDROID_DATA' in os.environ:
-        return "/sdcard/electrum/"
+        return "/sdcard/electrum-fair/"
     else:
         #raise Exception("No home directory found in environment variables.")
         return
@@ -107,7 +107,7 @@ def user_dir():
 
 
 
-def format_satoshis(x, is_diff=False, num_zeros = 0, decimal_point = 8, whitespaces=False):
+def format_satoshis(x, is_diff=False, num_zeros = 0, decimal_point = 6, whitespaces=False):
     from locale import localeconv
     if x is None:
         return 'unknown'
@@ -187,20 +187,12 @@ def age(from_date, since_date = None, target_tz=None, include_seconds=False):
         return "over %d years ago" % (round(distance_in_minutes / 525600))
 
 block_explorer_info = {
-    'Blockchain.info': ('https://blockchain.info',
-                        {'tx': 'tx', 'addr': 'address'}),
-    'Blockr.io': ('https://btc.blockr.io',
-                        {'tx': 'tx/info', 'addr': 'address/info'}),
-    'Insight.is': ('https://insight.bitpay.com',
-                        {'tx': 'tx', 'addr': 'address'}),
-    'Blocktrail.com': ('https://www.blocktrail.com/BTC',
-                        {'tx': 'tx', 'addr': 'address'}),
-    'TradeBlock.com': ('https://tradeblock.com/blockchain',
+    'chain.fair-coin.org': ('https://chain.fair-coin.org',
                         {'tx': 'tx', 'addr': 'address'}),
 }
 
 def block_explorer(config):
-    return config.get('block_explorer', 'Blockchain.info')
+    return config.get('block_explorer', 'chain.fair-coin.org')
 
 def block_explorer_tuple(config):
     return block_explorer_info.get(block_explorer(config))
@@ -228,7 +220,7 @@ def parse_URI(uri):
         return uri, None, None, None, None
 
     u = urlparse.urlparse(uri)
-    assert u.scheme == 'bitcoin'
+    assert u.scheme == 'faircoin'
 
     address = u.path
 
@@ -251,7 +243,7 @@ def parse_URI(uri):
             k = int(m.group(2)) - 8
             amount = Decimal(m.group(1)) * pow(  Decimal(10) , k)
         else:
-            amount = Decimal(am) * 100000000
+            amount = Decimal(am) * 1000000
     if 'message' in pq:
         message = pq['message'][0].decode('utf8')
     if 'label' in pq:
@@ -278,7 +270,7 @@ def create_URI(addr, amount, message):
         if type(message) == unicode:
             message = message.encode('utf8')
         query.append('message=%s'%urllib.quote(message))
-    p = urlparse.ParseResult(scheme='bitcoin', netloc='', path=addr, params='', query='&'.join(query), fragment='')
+    p = urlparse.ParseResult(scheme='faircoin', netloc='', path=addr, params='', query='&'.join(query), fragment='')
     return urlparse.urlunparse(p)
 
 

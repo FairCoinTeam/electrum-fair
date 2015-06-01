@@ -60,10 +60,10 @@ setup(
     },
     scripts=['electrum'],
     data_files=data_files,
-    description="Lightweight Bitcoin Wallet",
-    author="Thomas Voegtlin",
+    description="Lightweight Fairoin Wallet",
+    author="Thomas Voegtlin, Thomas König",
     author_email="thomasv@electrum.org",
     license="GNU GPLv3",
     url="https://electrum.org",
-    long_description="""Lightweight Bitcoin Wallet"""
+    long_description="""Lightweight FairCoin Wallet"""
 )

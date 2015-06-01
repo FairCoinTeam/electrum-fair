@@ -151,7 +151,7 @@ class InstallWizard(QDialog):
         vbox.addStretch(1)
         button = OkButton(self, _('Next'))
         vbox.addLayout(Buttons(CancelButton(self), button))
-        button.setEnabled(False)
+        button.setEnabled(True)
         f = lambda: button.setEnabled( map(lambda e: Wallet.is_xpub(self.get_seed_text(e)), entries) == [True]*len(entries))
         for e in entries:
             e.textChanged.connect(f)

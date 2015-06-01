@@ -36,7 +36,7 @@ import shutil
 
 from util import *
 
-bitcoin = lambda v: v * 100000000
+bitcoin = lambda v: v * 1000000
 
 def IconButton(filename, parent=None):
     pixmap = QPixmap(filename)
@@ -166,7 +166,7 @@ class MiniWindow(QDialog):
         # This is changed according to the user's displayed balance
         self.amount_validator = QDoubleValidator(self.amount_input)
         self.amount_validator.setNotation(QDoubleValidator.StandardNotation)
-        self.amount_validator.setDecimals(8)
+        self.amount_validator.setDecimals(6)
         self.amount_input.setValidator(self.amount_validator)
 
         # This removes the very ugly OSX highlighting, please leave this in :D
@@ -712,9 +712,9 @@ class MiniActuator:
 
         fee = 0
         # 0.1 BTC = 10000000
-        if amount < bitcoin(1) / 10:
+        if amount < bitcoin(1):
             # 0.001 BTC
-            fee = bitcoin(1) / 1000
+            fee = bitcoin(1) / 10
 
         try:
             tx = self.g.wallet.mktx([(dest_address, amount)], password, fee)

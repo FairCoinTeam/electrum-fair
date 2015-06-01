@@ -48,7 +48,7 @@ def numbify(entry, is_int = False):
             s = s.replace('.','')
             s = s[:p] + '.' + s[p:p+8]
         try:
-            amount = int( Decimal(s) * 100000000 )
+            amount = int( Decimal(s) * 1000000 )
         except Exception:
             amount = None
     else:
@@ -164,7 +164,7 @@ def run_settings_dialog(self):
     fee_label.set_size_request(150,10)
     fee_label.show()
     fee.pack_start(fee_label,False, False, 10)
-    fee_entry.set_text( str( Decimal(self.wallet.fee_per_kb) /100000000 ) )
+    fee_entry.set_text( str( Decimal(self.wallet.fee_per_kb) /1000000 ) )
     fee_entry.connect('changed', numbify, False)
     fee_entry.show()
     fee.pack_start(fee_entry,False,False, 10)
@@ -196,7 +196,7 @@ def run_settings_dialog(self):
         return
 
     try:
-        fee = int( 100000000 * Decimal(fee) )
+        fee = int( 1000000 * Decimal(fee) )
     except Exception:
         show_message("error")
         return
@@ -457,7 +457,7 @@ class ElectrumWindow:
         self.num_zeros = int(self.config.get('num_zeros',0))
         self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.connect('key-press-event', self.on_key)
-        title = 'Electrum ' + self.wallet.electrum_version + '  -  ' + self.config.path
+        title = 'Electrum for FairCoin ' + self.wallet.electrum_version + '  -  ' + self.config.path
         if not self.wallet.seed: title += ' [seedless]'
         self.window.set_title(title)
         self.window.connect("destroy", Gtk.main_quit)
@@ -697,7 +697,7 @@ class ElectrumWindow:
             if not self.funds_error:
                 if not is_fee:
                     fee = tx.get_fee()
-                    fee_entry.set_text( str( Decimal( fee ) / 100000000 ) )
+                    fee_entry.set_text( str( Decimal( fee ) / 1000000 ) )
                     self.fee_box.show()
                 amount_entry.modify_text(Gtk.StateType.NORMAL, Gdk.color_parse("#000000"))
                 fee_entry.modify_text(Gtk.StateType.NORMAL, Gdk.color_parse("#000000"))
@@ -790,12 +790,12 @@ class ElectrumWindow:
             return
 
         try:
-            amount = int( Decimal(amount_entry.get_text()) * 100000000 )
+            amount = int( Decimal(amount_entry.get_text()) * 1000000 )
         except Exception:
             self.show_message( "invalid amount")
             return
         try:
-            fee = int( Decimal(fee_entry.get_text()) * 100000000 )
+            fee = int( Decimal(fee_entry.get_text()) * 1000000 )
         except Exception:
             self.show_message( "invalid fee")
             return

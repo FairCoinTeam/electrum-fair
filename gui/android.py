@@ -474,7 +474,7 @@ def make_new_contact():
     if r:
         data = str(r['extras']['SCAN_RESULT']).strip()
         if data:
-            if re.match('^bitcoin:', data):
+            if re.match('^faircoin:', data):
                 address, _, _, _, _ = util.parse_URI(data)
             elif is_address(data):
                 address = data
@@ -585,7 +585,7 @@ def payto_loop():
                     continue
 
                 try:
-                    amount = int( 100000000 * Decimal(amount) )
+                    amount = int( 1000000 * Decimal(amount) )
                 except Exception:
                     modal_dialog('Error','Invalid amount')
                     continue
@@ -605,10 +605,10 @@ def payto_loop():
                     data = str(r['extras']['SCAN_RESULT']).strip()
                     if data:
                         print "data", data
-                        if re.match('^bitcoin:', data):
+                        if re.match('^faircoin:', data):
                             payto, amount, label, message, _ = util.parse_URI(data)
                             if amount:
-                                amount = str(amount/100000000)
+                                amount = str(amount/1000000)
                             droid.fullSetProperty("recipient", "text", payto)
                             droid.fullSetProperty("amount", "text", amount)
                             droid.fullSetProperty("message", "text", message)
@@ -662,7 +662,7 @@ def receive_loop():
         elif event["name"]=="amount":
             amount = modal_input('Amount', 'Amount you want to receive (in BTC). ', format_satoshis(receive_amount) if receive_amount else None, "numberDecimal")
             if amount is not None:
-                receive_amount = int(100000000 * Decimal(amount)) if amount else None
+                receive_amount = int(1000000 * Decimal(amount)) if amount else None
                 out = 'receive'
 
         elif event["name"]=="message":
@@ -770,7 +770,7 @@ def settings_loop():
 
     def set_listview():
         host, port, p, proxy_config, auto_connect = network.get_parameters()
-        fee = str( Decimal( wallet.fee_per_kb)/100000000 )
+        fee = str( Decimal( wallet.fee_per_kb)/1000000 )
         is_encrypted = 'yes' if wallet.use_encryption else 'no'
         protocol = protocol_name(p)
         droid.fullShow(settings_layout)
@@ -818,10 +818,10 @@ def settings_loop():
 
             elif pos == "3": #fee
                 fee = modal_input('Transaction fee', 'The fee will be this amount multiplied by the number of inputs in your transaction. ',
-                                  str(Decimal(wallet.fee_per_kb)/100000000 ), "numberDecimal")
+                                  str(Decimal(wallet.fee_per_kb)/1000000 ), "numberDecimal")
                 if fee:
                     try:
-                        fee = int( 100000000 * Decimal(fee) )
+                        fee = int( 1000000 * Decimal(fee) )
                     except Exception:
                         modal_dialog('error','invalid fee value')
                     wallet.set_fee(fee)
