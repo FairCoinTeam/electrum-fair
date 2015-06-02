@@ -5,7 +5,7 @@ import os
 
 from util import user_dir, print_error, print_msg
 
-SYSTEM_CONFIG_PATH = "/etc/electrum.conf"
+SYSTEM_CONFIG_PATH = "/etc/electrum-fair.conf"
 
 config = None
 
@@ -95,7 +95,7 @@ class SimpleConfig(object):
     def set_key(self, key, value, save = True):
         if not self.is_modifiable(key):
             print "Warning: not changing key '%s' because it is not modifiable" \
-                  " (passed as command line option or defined in /etc/electrum.conf)"%key
+                  " (passed as command line option or defined in /etc/electrum-fair.conf)"%key
             return
 
         with self.lock:
@@ -161,7 +161,7 @@ class SimpleConfig(object):
 
 
 def read_system_config(path=SYSTEM_CONFIG_PATH):
-    """Parse and return the system config settings in /etc/electrum.conf."""
+    """Parse and return the system config settings in /etc/electrum-fair.conf."""
     result = {}
     if os.path.exists(path):
         try:

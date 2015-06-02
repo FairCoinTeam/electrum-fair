@@ -34,11 +34,11 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-from electrum.i18n import _, set_language
-from electrum.util import print_error, print_msg
-from electrum.plugins import run_hook, always_hook
-from electrum import WalletStorage, Wallet
-from electrum.bitcoin import MIN_RELAY_TX_FEE
+from electrum_fair.i18n import _, set_language
+from electrum_fair.util import print_error, print_msg
+from electrum_fair.plugins import run_hook, always_hook
+from electrum_fair import WalletStorage, Wallet
+from electrum_fair.bitcoin import MIN_RELAY_TX_FEE
 
 try:
     import icons_rc

@@ -17,11 +17,11 @@ import aes
 import base64
 
 import electrum
-from electrum.plugins import BasePlugin, hook
-from electrum.i18n import _
+from electrum_fair.plugins import BasePlugin, hook
+from electrum_fair.i18n import _
 
-from electrum_gui.qt import HelpButton, EnterButton
-from electrum_gui.qt.util import ThreadedButton, Buttons, CancelButton, OkButton
+from electrum_fair_gui.qt import HelpButton, EnterButton
+from electrum_fair_gui.qt.util import ThreadedButton, Buttons, CancelButton, OkButton
 
 class Plugin(BasePlugin):
 

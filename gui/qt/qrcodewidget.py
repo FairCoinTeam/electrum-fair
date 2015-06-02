@@ -7,8 +7,8 @@ import os
 import qrcode
 
 import electrum
-from electrum import bmp
-from electrum.i18n import _
+from electrum_fair import bmp
+from electrum_fair.i18n import _
 
 
 class QRCodeWidget(QWidget):

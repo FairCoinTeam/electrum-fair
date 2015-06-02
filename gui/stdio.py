@@ -1,10 +1,10 @@
 from decimal import Decimal
 _ = lambda x:x
 #from i18n import _
-from electrum.wallet import WalletStorage, Wallet
-from electrum.util import format_satoshis, set_verbosity, StoreDict
-from electrum.bitcoin import is_valid
-from electrum.network import filter_protocol
+from electrum_fair.wallet import WalletStorage, Wallet
+from electrum_fair.util import format_satoshis, set_verbosity, StoreDict
+from electrum_fair.bitcoin import is_valid
+from electrum_fair.network import filter_protocol
 import sys, getpass, datetime
 
 # minimal fdisk like gui for console usage

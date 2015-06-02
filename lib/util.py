@@ -263,9 +263,10 @@ def create_URI(addr, amount, message):
     import bitcoin
     if not bitcoin.is_address(addr):
         return ""
+    
     query = []
     if amount:
-        query.append('amount=%s'%format_satoshis(amount))
+        query.append('amount=%s'%(amount/1000000))
     if message:
         if type(message) == unicode:
             message = message.encode('utf8')

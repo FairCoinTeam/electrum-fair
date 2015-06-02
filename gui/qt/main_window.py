@@ -17,9 +17,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import sys, time, re, threading
-from electrum.i18n import _, set_language
-from electrum.util import block_explorer, block_explorer_info, block_explorer_URL
-from electrum.util import print_error, print_msg
+from electrum_fair.i18n import _, set_language
+from electrum_fair.util import block_explorer, block_explorer_info, block_explorer_URL
+from electrum_fair.util import print_error, print_msg
 import os.path, json, ast, traceback
 import shutil
 import StringIO
@@ -30,17 +30,17 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-from electrum.bitcoin import MIN_RELAY_TX_FEE, is_valid
-from electrum.plugins import run_hook
+from electrum_fair.bitcoin import MIN_RELAY_TX_FEE, is_valid
+from electrum_fair.plugins import run_hook
 
 import icons_rc
 
-from electrum.util import format_satoshis, format_time, NotEnoughFunds, StoreDict
-from electrum import Transaction
-from electrum import mnemonic
-from electrum import util, bitcoin, commands, Wallet
-from electrum import SimpleConfig, Wallet, WalletStorage
-from electrum import Imported_Wallet
+from electrum_fair.util import format_satoshis, format_time, NotEnoughFunds, StoreDict
+from electrum_fair import Transaction
+from electrum_fair import mnemonic
+from electrum_fair import util, bitcoin, commands, Wallet
+from electrum_fair import SimpleConfig, Wallet, WalletStorage
+from electrum_fair import Imported_Wallet
 
 from amountedit import AmountEdit, BTCAmountEdit, MyLineEdit
 from network_dialog import NetworkDialog
@@ -58,7 +58,7 @@ import csv
 
 
 
-from electrum import ELECTRUM_VERSION
+from electrum_fair import ELECTRUM_VERSION
 import re
 
 from util import *
@@ -79,8 +79,8 @@ class StatusBarButton(QPushButton):
             apply(self.func,())
 
 
-from electrum.paymentrequest import PR_UNPAID, PR_PAID, PR_EXPIRED
-from electrum.paymentrequest import PaymentRequest, InvoiceStore, get_payment_request, make_payment_request
+from electrum_fair.paymentrequest import PR_UNPAID, PR_PAID, PR_EXPIRED
+from electrum_fair.paymentrequest import PaymentRequest, InvoiceStore, get_payment_request, make_payment_request
 
 pr_icons = {
     PR_UNPAID:":icons/unpaid.png",
@@ -201,7 +201,7 @@ class ElectrumWindow(QMainWindow):
         run_hook('close_wallet')
 
     def load_wallet(self, wallet):
-        import electrum
+        import electrum_fair
         self.wallet = wallet
         # backward compatibility
         self.update_wallet_format()
@@ -2114,7 +2114,7 @@ class ElectrumWindow(QMainWindow):
 
 
     def read_tx_from_qrcode(self):
-        from electrum import qrscanner
+        from electrum_fair import qrscanner
         try:
             data = qrscanner.scan_qr(self.config)
         except BaseException, e:
@@ -2172,7 +2172,7 @@ class ElectrumWindow(QMainWindow):
             self.show_transaction(tx)
 
     def do_process_from_txid(self):
-        from electrum import transaction
+        from electrum_fair import transaction
         txid, ok = QInputDialog.getText(self, _('Lookup transaction'), _('Transaction ID') + ':')
         if ok and txid:
             r = self.network.synchronous_get([ ('blockchain.transaction.get',[str(txid)]) ])[0]
@@ -2483,7 +2483,7 @@ class ElectrumWindow(QMainWindow):
         lang_label = QLabel(_('Language') + ':')
         lang_help = HelpButton(_('Select which language is used in the GUI (after restart).'))
         lang_combo = QComboBox()
-        from electrum.i18n import languages
+        from electrum_fair.i18n import languages
         lang_combo.addItems(languages.values())
         try:
             index = languages.keys().index(self.config.get("language",''))
@@ -2573,7 +2573,7 @@ class ElectrumWindow(QMainWindow):
         block_ex_combo.currentIndexChanged.connect(on_be)
         widgets.append((block_ex_label, block_ex_combo, block_ex_help))
 
-        from electrum import qrscanner
+        from electrum_fair import qrscanner
         system_cameras = qrscanner._find_system_cameras()
         qr_combo = QComboBox()
         qr_combo.addItem("Default","default")
@@ -2656,7 +2656,7 @@ class ElectrumWindow(QMainWindow):
 
 
     def plugins_dialog(self):
-        from electrum.plugins import plugins
+        from electrum_fair.plugins import plugins
 
         self.pluginsdialog = d = QDialog(self)
         d.setWindowTitle(_('Electrum Plugins'))
@@ -2744,7 +2744,7 @@ class ElectrumWindow(QMainWindow):
 
     @protected
     def create_csr(self, alias, challenge, password):
-        from electrum import x509
+        from electrum_fair import x509
         import tlslite
         xprv = self.wallet.get_master_private_key(self.wallet.root_name, password)
         _, _, _, c, k = bitcoin.deserialize_xkey(xprv)
