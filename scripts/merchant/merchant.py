@@ -24,8 +24,8 @@ import json
 import Queue
 import sqlite3
 
-import electrum
-electrum.set_verbosity(False)
+import electrum_fair
+electrum_fair.set_verbosity(False)
 
 import ConfigParser
 config = ConfigParser.ConfigParser()

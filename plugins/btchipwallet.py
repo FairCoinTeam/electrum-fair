@@ -7,7 +7,7 @@ from sys import stderr
 from time import sleep
 from base64 import b64encode, b64decode
 
-import electrum
+import electrum_fair
 from electrum_fair_gui.qt.password_dialog import make_password_dialog, run_password_dialog
 from electrum_fair.account import BIP32_Account
 from electrum_fair.bitcoin import EncodeBase58Check, DecodeBase58Check, public_key_to_bc_address, bc_address_to_hash_160

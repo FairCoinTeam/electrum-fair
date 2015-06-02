@@ -8,7 +8,7 @@ from base64 import b64encode, b64decode
 import unicodedata
 import threading
 
-import electrum
+import electrum_fair
 from electrum_fair.account import BIP32_Account
 from electrum_fair.bitcoin import EncodeBase58Check, public_key_to_bc_address, bc_address_to_hash_160
 from electrum_fair.i18n import _

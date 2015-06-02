@@ -500,6 +500,7 @@ class Transaction:
     @classmethod
     def from_io(klass, inputs, outputs, locktime=0):
         self = klass(None)
+        self.time = int(time.time())
         self.inputs = inputs
         self.outputs = outputs
         self.locktime = locktime

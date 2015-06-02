@@ -16,7 +16,7 @@ import PyQt4.QtGui as QtGui
 import aes
 import base64
 
-import electrum
+import electrum_fair
 from electrum_fair.plugins import BasePlugin, hook
 from electrum_fair.i18n import _
 

@@ -6,7 +6,7 @@ import PyQt4.QtGui as QtGui
 import os
 import qrcode
 
-import electrum
+import electrum_fair
 from electrum_fair import bmp
 from electrum_fair.i18n import _
 

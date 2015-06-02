@@ -2,7 +2,7 @@
 
 import sys
 import time
-import electrum
+import electrum_fair
 
 try:
     addr = sys.argv[1]
