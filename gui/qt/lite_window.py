@@ -457,7 +457,7 @@ class MiniWindow(QDialog):
 
 
     def the_website(self):
-        webbrowser.open("http://electrum.org")
+        webbrowser.open("https://electrum.fair-coin.org")
 
 
     def toggle_receiving_layout(self, toggle_state):

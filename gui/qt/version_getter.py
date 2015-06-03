@@ -34,8 +34,8 @@ class VersionGetter(threading.Thread):
 
     def run(self):
         try:
-            con = httplib.HTTPSConnection('electrum.org', timeout=5)
-            con.request("GET", "/version")
+            con = httplib.HTTPSConnection('electrum.fair-coin.org', timeout=5)
+            con.request("GET", "/version.html")
             res = con.getresponse()
         except socket.error as msg:
             print_error("Could not retrieve version information")
@@ -94,7 +94,7 @@ class UpdateLabel(QLabel):
         self.dialog.done(0)
 
     def open_website(self):
-        webbrowser.open("http://electrum.org/download.html")
+        webbrowser.open("https://electrum.fair-coin.org/")
         self.dialog.done(0)
 
     def mouseReleaseEvent(self, event):
