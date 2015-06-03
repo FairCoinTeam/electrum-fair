@@ -34,7 +34,7 @@ import aes
 DUST_THRESHOLD = 1000
 MIN_RELAY_TX_FEE = 1000
 RECOMMENDED_FEE = 1000
-COINBASE_MATURITY = 100
+COINBASE_MATURITY = 25
 
 # AES encryption
 EncodeAES = lambda secret, s: base64.b64encode(aes.encryptData(secret,s))

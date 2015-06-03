@@ -76,10 +76,11 @@ class AddressDialog(QDialog):
 
     def show_qr(self):
         text = self.address
+        
         try:
             self.parent.show_qrcode(text, 'Address')
         except Exception as e:
-            self.show_message(str(e))
+            self.parent.show_message(str(e))
 
 
 
