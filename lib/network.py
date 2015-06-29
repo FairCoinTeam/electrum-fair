@@ -14,10 +14,10 @@ from bitcoin import *
 import interface
 from blockchain import Blockchain
 
-DEFAULT_PORTS = {'t':'50001', 's':'50002', 'h':'8081', 'g':'8082'}
+DEFAULT_PORTS = {'t':'51001', 's':'51002', 'h':'8181', 'g':'8182'}
 
 DEFAULT_SERVERS = {
-    'chain.fair-coin.org':{'s':'50002'},
+    'chain.fair-coin.org':{'s':'51002'},
 }
 
 NODES_RETRY_INTERVAL = 60
