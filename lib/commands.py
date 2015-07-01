@@ -222,7 +222,7 @@ class Commands:
         """Create multisig address"""
         assert isinstance(pubkeys, list), (type(num), type(pubkeys))
         redeem_script = Transaction.multisig_script(pubkeys, num)
-        address = hash_160_to_bc_address(hash_160(redeem_script.decode('hex')), 5)
+        address = hash_160_to_bc_address(hash_160(redeem_script.decode('hex')), 36)
         return {'address':address, 'redeemScript':redeem_script}
 
     @command('w')
@@ -312,8 +312,8 @@ class Commands:
     @command('')
     def version(self):
         """Return the version of electrum."""
-        import electrum  # Needs to stay here to prevent ciruclar imports
-        return electrum.ELECTRUM_VERSION
+        import electrum_fair  # Needs to stay here to prevent ciruclar imports
+        return electrum_fair.ELECTRUM_VERSION
 
     @command('w')
     def getmpk(self):

@@ -24,18 +24,18 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GObject, cairo
 from decimal import Decimal
-from electrum.util import print_error, InvalidPassword
-from electrum.bitcoin import is_valid, COIN
-from electrum.wallet import NotEnoughFunds
-from electrum import WalletStorage, Wallet
+from electrum_fair.util import print_error, InvalidPassword
+from electrum_fair.bitcoin import is_valid, COIN
+from electrum_fair.wallet import NotEnoughFunds
+from electrum_fair import WalletStorage, Wallet
 
 Gdk.threads_init()
-APP_NAME = "Electrum"
+APP_NAME = "ElectrumFair"
 import platform
 MONOSPACE_FONT = 'Lucida Console' if platform.system() == 'Windows' else 'monospace'
 
-from electrum.util import format_satoshis, parse_URI
-from electrum.bitcoin import MIN_RELAY_TX_FEE
+from electrum_fair.util import format_satoshis, parse_URI
+from electrum_fair.bitcoin import MIN_RELAY_TX_FEE
 
 def numbify(entry, is_int = False):
     text = entry.get_text().strip()
@@ -457,7 +457,7 @@ class ElectrumWindow:
         self.num_zeros = int(self.config.get('num_zeros',0))
         self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.connect('key-press-event', self.on_key)
-        title = 'Electrum ' + self.wallet.electrum_version + '  -  ' + self.config.path
+        title = 'Electrum for FairCoin ' + self.wallet.electrum_version + '  -  ' + self.config.path
         if not self.wallet.seed: title += ' [seedless]'
         self.window.set_title(title)
         self.window.connect("destroy", Gtk.main_quit)
@@ -466,7 +466,7 @@ class ElectrumWindow:
         self.window.set_default_size(720, 350)
         self.wallet_updated = False
 
-        from electrum.util import StoreDict
+        from electrum_fair.util import StoreDict
         self.contacts = StoreDict(self.config, 'contacts')
 
         vbox = Gtk.VBox()

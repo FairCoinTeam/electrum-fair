@@ -65,16 +65,16 @@ except Exception:
 # load local module as electrum
 if is_bundle or is_local or is_android:
     import imp
-    imp.load_module('electrum', *imp.find_module('lib'))
-    imp.load_module('electrum_gui', *imp.find_module('gui'))
+    imp.load_module('electrum_fair', *imp.find_module('lib'))
+    imp.load_module('electrum_fair_gui', *imp.find_module('gui'))
 
 
-from electrum import util
-from electrum import SimpleConfig, Network, Wallet, WalletStorage, NetworkProxy
-from electrum.util import print_msg, print_error, print_stderr, print_json, set_verbosity, InvalidPassword
-from electrum.daemon import get_daemon
-from electrum.plugins import init_plugins, run_hook, always_hook
-from electrum.commands import get_parser, known_commands, Commands, config_variables
+from electrum_fair import util
+from electrum_fair import SimpleConfig, Network, Wallet, WalletStorage, NetworkProxy
+from electrum_fair.util import print_msg, print_error, print_stderr, print_json, set_verbosity, InvalidPassword
+from electrum_fair.daemon import get_daemon
+from electrum_fair.plugins import init_plugins, run_hook, always_hook
+from electrum_fair.commands import get_parser, known_commands, Commands, config_variables
 
 
 # get password routine
@@ -99,9 +99,9 @@ def run_gui(config):
     if url:
         if os.path.exists(url):
             # assume this is a payment request
-            url = "bitcoin:?r=file://"+ os.path.join(os.getcwd(), url)
+            url = "faircoin:?r=file://"+ os.path.join(os.getcwd(), url)
 
-        if not re.match('^bitcoin:', url):
+        if not re.match('^faircoin:', url):
             print_stderr('unknown command:', url)
             sys.exit(1)
 
@@ -110,7 +110,7 @@ def run_gui(config):
         gui_name = 'qt'
 
     try:
-        gui = __import__('electrum_gui.' + gui_name, fromlist=['electrum_gui'])
+        gui = __import__('electrum_fair_gui.' + gui_name, fromlist=['electrum_fair_gui'])
     except ImportError:
         traceback.print_exc(file=sys.stdout)
         sys.exit()
@@ -137,7 +137,7 @@ def run_gui(config):
 def run_daemon(config):
     cmd = config.get('subcommand')
     if cmd not in ['start', 'stop', 'status']:
-        print_msg("syntax: electrum daemon <start|status|stop>")
+        print_msg("syntax: electrum-fair daemon <start|status|stop>")
         sys.exit(1)
     s = get_daemon(config, False)
     if cmd == 'start':

@@ -16,12 +16,12 @@ import PyQt4.QtGui as QtGui
 import aes
 import base64
 
-import electrum
-from electrum.plugins import BasePlugin, hook
-from electrum.i18n import _
+import electrum_fair
+from electrum_fair.plugins import BasePlugin, hook
+from electrum_fair.i18n import _
 
-from electrum_gui.qt import HelpButton, EnterButton
-from electrum_gui.qt.util import ThreadedButton, Buttons, CancelButton, OkButton
+from electrum_fair_gui.qt import HelpButton, EnterButton
+from electrum_fair_gui.qt.util import ThreadedButton, Buttons, CancelButton, OkButton
 
 class Plugin(BasePlugin):
 
@@ -32,12 +32,12 @@ class Plugin(BasePlugin):
         return "0.0.1"
 
     def encode(self, message):
-        encrypted = electrum.bitcoin.aes_encrypt_with_iv(self.encode_password, self.iv, message.encode('utf8'))
+        encrypted = electrum_fair.bitcoin.aes_encrypt_with_iv(self.encode_password, self.iv, message.encode('utf8'))
         encoded_message = base64.b64encode(encrypted)
         return encoded_message
 
     def decode(self, message):
-        decoded_message = electrum.bitcoin.aes_decrypt_with_iv(self.encode_password, self.iv, base64.b64decode(message)).decode('utf8')
+        decoded_message = electrum_fair.bitcoin.aes_decrypt_with_iv(self.encode_password, self.iv, base64.b64decode(message)).decode('utf8')
         return decoded_message
 
     def set_nonce(self, nonce):

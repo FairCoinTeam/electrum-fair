@@ -15,23 +15,11 @@ import interface
 from blockchain import Blockchain
 from collections import deque
 
-DEFAULT_PORTS = {'t':'50001', 's':'50002', 'h':'8081', 'g':'8082'}
+DEFAULT_PORTS = {'t':'51001', 's':'51002', 'h':'8181', 'g':'8182'}
 
 DEFAULT_SERVERS = {
-    'electrum.be':DEFAULT_PORTS,
-    'electrum.drollette.com':{'t':'50001', 's':'50002'},
-    'erbium1.sytes.net':{'t':'50001', 's':'50002'},
-    'ecdsa.net':{'t':'50001', 's':'110'},
-    'eco-electrum.ddns.net':{'t': '50001', 's': '50002', 'h': '80', 'g': '443'},
-    'electrum0.electricnewyear.net':{'t':'50001', 's':'50002'},
-    'kirsche.emzy.de':{'t':'50001', 's':'50002', 'h':'8081'},
-    'electrum2.hachre.de':DEFAULT_PORTS,
-    'electrum.hsmiths.com':DEFAULT_PORTS,
-    'EAST.electrum.jdubya.info':DEFAULT_PORTS,
-    'WEST.electrum.jdubya.info':DEFAULT_PORTS,
-    'electrum.no-ip.org':{'t':'50001', 's':'50002', 'h':'80', 'g':'443'},
-    'electrum.thwg.org':DEFAULT_PORTS,
-    'us.electrum.be':DEFAULT_PORTS,
+    'chain.fair-coin.org':{'s':'51002'},
+    'fairlectrum.fair-coin.org':{'s':'51002'},
 }
 
 NODES_RETRY_INTERVAL = 60

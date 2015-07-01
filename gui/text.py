@@ -1,11 +1,11 @@
 import curses, datetime, locale
 from decimal import Decimal
 _ = lambda x:x
-from electrum.util import format_satoshis, set_verbosity
-from electrum.util import StoreDict
-from electrum.bitcoin import is_valid, COIN
+from electrum_fair.util import format_satoshis, set_verbosity
+from electrum_fair.util import StoreDict
+from electrum_fair.bitcoin import is_valid, COIN
 
-from electrum import Wallet, WalletStorage
+from electrum_fair import Wallet, WalletStorage
 
 import tty, sys
 
@@ -293,7 +293,7 @@ class ElectrumGui:
 
     def do_send(self):
         if not is_valid(self.str_recipient):
-            self.show_message(_('Invalid Bitcoin address'))
+            self.show_message(_('Invalid FairCoin address'))
             return
         try:
             amount = int(Decimal(self.str_amount) * COIN)

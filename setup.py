@@ -20,13 +20,13 @@ data_files = []
 if platform.system() in [ 'Linux', 'FreeBSD', 'DragonFly']:
     usr_share = os.path.join(sys.prefix, "share")
     data_files += [
-        (os.path.join(usr_share, 'applications/'), ['electrum.desktop']),
+        (os.path.join(usr_share, 'applications/'), ['electrum-fair.desktop']),
         (os.path.join(usr_share, 'pixmaps/'), ['icons/electrum.png'])
     ]
 
 
 setup(
-    name="Electrum",
+    name="Electrum-fair",
     version=version.ELECTRUM_VERSION,
     install_requires=[
         'slowaes>=0.1a1',
@@ -39,18 +39,18 @@ setup(
         'dnspython',
     ],
     package_dir={
-        'electrum': 'lib',
-        'electrum_gui': 'gui',
-        'electrum_plugins': 'plugins',
+        'electrum_fair': 'lib',
+        'electrum_fair_gui': 'gui',
+        'electrum_fair_plugins': 'plugins',
     },
-    packages=['electrum','electrum_gui','electrum_gui.qt','electrum_plugins'],
+    packages=['electrum_fair','electrum_fair_gui','electrum_fair_gui.qt','electrum_fair_plugins'],
     package_data={
-        'electrum': [
+        'electrum_fair': [
             'www/index.html',
             'wordlist/*.txt',
             'locale/*/LC_MESSAGES/electrum.mo',
         ],
-        'electrum_gui': [
+        'electrum_fair_gui': [
             "qt/themes/cleanlook/name.cfg",
             "qt/themes/cleanlook/style.css",
             "qt/themes/sahara/name.cfg",
@@ -59,12 +59,12 @@ setup(
             "qt/themes/dark/style.css",
         ]
     },
-    scripts=['electrum'],
+    scripts=['electrum-fair'],
     data_files=data_files,
-    description="Lightweight Bitcoin Wallet",
-    author="Thomas Voegtlin",
+    description="Lightweight Fairoin Wallet",
+    author="Thomas Voegtlin, Thomas Koenig",
     author_email="thomasv@electrum.org",
     license="GNU GPLv3",
     url="https://electrum.org",
-    long_description="""Lightweight Bitcoin Wallet"""
+    long_description="""Lightweight FairCoin Wallet"""
 )

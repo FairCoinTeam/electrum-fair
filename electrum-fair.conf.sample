@@ -6,7 +6,7 @@
 # that can be rewritten by the client
 
 [client]
-server = electrum.novit.ro:50001:t
+server = chain.fair-coin.org:51002:s
 proxy = None
 gap_limit = 5
 # booleans use python syntax

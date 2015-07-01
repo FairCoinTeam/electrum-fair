@@ -24,8 +24,8 @@ import json
 import Queue
 import sqlite3
 
-import electrum
-electrum.set_verbosity(False)
+import electrum_fair
+electrum_fair.set_verbosity(False)
 
 import ConfigParser
 config = ConfigParser.ConfigParser()
@@ -258,9 +258,9 @@ if __name__ == '__main__':
         sys.exit(ret)
 
     # start network
-    c = electrum.SimpleConfig({'wallet_path':wallet_path})
-    daemon_socket = electrum.daemon.get_daemon(c, True)
-    network = electrum.NetworkProxy(daemon_socket, config)
+    c = electrum_fair.SimpleConfig({'wallet_path':wallet_path})
+    daemon_socket = electrum_fair.daemon.get_daemon(c, True)
+    network = electrum_fair.NetworkProxy(daemon_socket, config)
     network.start()
 
     # wait until connected
@@ -272,12 +272,12 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # create watching_only wallet
-    storage = electrum.WalletStorage(c)
+    storage = electrum_fair.WalletStorage(c)
     if not storage.file_exists:
         print "creating wallet file"
-        wallet = electrum.wallet.Wallet.from_xpub(xpub, storage)
+        wallet = electrum_fair.wallet.Wallet.from_xpub(xpub, storage)
     else:
-        wallet = electrum.wallet.Wallet(storage)
+        wallet = electrum_fair.wallet.Wallet(storage)
 
     wallet.synchronize = lambda: None # prevent address creation by the wallet
     wallet.start_threads(network)

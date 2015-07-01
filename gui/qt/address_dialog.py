@@ -17,8 +17,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import sys, time, datetime, re, threading
-from electrum.i18n import _, set_language
-from electrum.util import print_error, print_msg
+from electrum_fair.i18n import _, set_language
+from electrum_fair.util import print_error, print_msg
 import os.path, json, ast, traceback
 import shutil
 import StringIO
@@ -76,10 +76,11 @@ class AddressDialog(QDialog):
 
     def show_qr(self):
         text = self.address
+        
         try:
             self.parent.show_qrcode(text, 'Address')
         except Exception as e:
-            self.show_message(str(e))
+            self.parent.show_message(str(e))
 
 
 

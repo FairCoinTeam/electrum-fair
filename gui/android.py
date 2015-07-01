@@ -22,9 +22,9 @@
 from __future__ import absolute_import
 import android
 
-from electrum import SimpleConfig, Wallet, WalletStorage, format_satoshis
-from electrum.bitcoin import is_address, COIN
-from electrum import util
+from electrum_fair import SimpleConfig, Wallet, WalletStorage, format_satoshis
+from electrum_fair.bitcoin import is_address, COIN
+from electrum_fair import util
 from decimal import Decimal
 import datetime, re
 
@@ -474,7 +474,7 @@ def make_new_contact():
     if r:
         data = str(r['extras']['SCAN_RESULT']).strip()
         if data:
-            if re.match('^bitcoin:', data):
+            if re.match('^faircoin:', data):
                 address, _, _, _, _ = util.parse_URI(data)
             elif is_address(data):
                 address = data
@@ -605,7 +605,7 @@ def payto_loop():
                     data = str(r['extras']['SCAN_RESULT']).strip()
                     if data:
                         print "data", data
-                        if re.match('^bitcoin:', data):
+                        if re.match('^faircoin:', data):
                             payto, amount, label, message, _ = util.parse_URI(data)
                             if amount:
                                 amount = str(amount / COIN)
@@ -879,7 +879,7 @@ def make_bitmap(data):
     droid.dialogShow()
     try:
         import qrcode
-        from electrum import bmp
+        from electrum_fair import bmp
         qr = qrcode.QRCode()
         qr.add_data(data)
         bmp.save_qrcode(qr,"/sdcard/sl4a/qrcode.bmp")
