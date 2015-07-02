@@ -286,7 +286,7 @@ def match_decoded(decoded, to_match):
 def parse_sig(x_sig):
     s = []
     for sig in x_sig:
-        if sig[-2:] == '01':
+        if sig[-2:] == '01' or sig[-2:] == '00': # the FairCoin recovery block has hashType 0x00
             s.append(sig[:-2])
         else:
             assert sig == NO_SIGNATURE
