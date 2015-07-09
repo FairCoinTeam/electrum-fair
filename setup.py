@@ -48,7 +48,7 @@ setup(
         'electrum_fair': [
             'www/index.html',
             'wordlist/*.txt',
-            'locale/*/LC_MESSAGES/electrum.mo',
+            'locale/*/LC_MESSAGES/electrum-fair.mo',
         ],
         'electrum_fair_gui': [
             "qt/themes/cleanlook/name.cfg",
@@ -61,10 +61,10 @@ setup(
     },
     scripts=['electrum-fair'],
     data_files=data_files,
-    description="Lightweight Fairoin Wallet",
-    author="Thomas Voegtlin, Thomas Koenig",
-    author_email="thomasv@electrum.org",
+    description="Lightweight FairCoin Wallet",
+    author="Thomas Koenig (original development by Thomas Voegtlin)",
+    author_email="tom@fair-coin.org",
     license="GNU GPLv3",
-    url="https://electrum.org",
+    url="https://electrum.fair-coin.org",
     long_description="""Lightweight FairCoin Wallet"""
 )
