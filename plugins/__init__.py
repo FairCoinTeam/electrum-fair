@@ -48,17 +48,23 @@ descriptions = [
         'available_for': ['qt'],
     },
     {
-        'name': 'exchange_rate',
-        'fullname': _("Exchange rates"),
-        'description': _("Exchange rates and currency conversion tools."),
+        'name': 'getfaircoin_exchange_rate',
+        'fullname': _("getfaircoin.net exchange rates"),
+        'description': _("Exchange rates from https://getfaircoin.net"),
         'available_for': ['qt'],
     },
-    {
-        'name': 'greenaddress_instant',
-        'fullname': 'GreenAddress instant',
-        'description': _("Allows validating if your transactions have instant confirmations by GreenAddress"),
-        'available_for': ['qt'],
-    },
+#    {
+#        'name': 'exchange_rate',
+#        'fullname': _("Exchange rates"),
+#        'description': _("Exchange rates and currency conversion tools."),
+#        'available_for': ['qt'],
+#    },
+#    {
+#        'name': 'greenaddress_instant',
+#        'fullname': 'GreenAddress instant',
+#        'description': _("Allows validating if your transactions have instant confirmations by GreenAddress"),
+#        'available_for': ['qt'],
+#    },
     {
         'name': 'labels',
         'fullname': _('LabelSync'),

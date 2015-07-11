@@ -36,7 +36,7 @@ import traceback
 
 
 PORT = 12344
-HOST = 'ecdsa.net'
+HOST = 'cosigner-pool.fair-coin.org'
 server = xmlrpclib.ServerProxy('http://%s:%d'%(HOST,PORT), allow_none=True)
 
 
