@@ -411,11 +411,11 @@ class ElectrumWindow(QMainWindow):
         self.setMenuBar(menubar)
 
     def show_about(self):
-        QMessageBox.about(self, "Electrum for FariCoin",
+        QMessageBox.about(self, "Electrum for FairCoin",
             _("Version")+" %s" % (self.wallet.electrum_version) + "\n\n" + _("Electrum's focus is speed, with low resource usage and simplifying FairCoin. You do not need to perform regular backups, because your wallet can be recovered from a secret phrase that you can memorize or write on paper. Startup times are instant because it operates in conjunction with high-performance servers that handle the most complicated parts of the FairCoin system."))
 
     def show_report_bug(self):
-        QMessageBox.information(self, "Electrum for FariCoin - " + _("Reporting Bugs"),
+        QMessageBox.information(self, "Electrum for FairCoin - " + _("Reporting Bugs"),
             _("Please report any bugs as issues on github:")+" <a href=\"https://github.com/FairCoinTeam/electrum-fair/issues\">https://github.com/FairCoinTeam/electrum-fair/issues</a>")
 
 

@@ -252,7 +252,7 @@ class MiniWindow(QDialog):
         self.toggle_receiving_layout(show_hist)
 
         self.setWindowIcon(QIcon(":icons/electrum.png"))
-        self.setWindowTitle("Electrum for FariCoin")
+        self.setWindowTitle("Electrum for FairCoin")
         self.setWindowFlags(Qt.Window|Qt.MSWindowsFixedSizeDialogHint)
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
         self.setObjectName("main_window")
@@ -583,7 +583,7 @@ class ReceivePopup(QDialog):
         main_layout.addWidget(address_display)
 
         self.setMouseTracking(True)
-        self.setWindowTitle("Electrum for FariCoin - " + _("Receive FairCoin payment"))
+        self.setWindowTitle("Electrum for FairCoin - " + _("Receive FairCoin payment"))
         self.setWindowFlags(Qt.Window|Qt.FramelessWindowHint|
                             Qt.MSWindowsFixedSizeDialogHint)
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
