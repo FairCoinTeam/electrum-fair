@@ -5,13 +5,10 @@ Electrum - lightweight Bitcoin client
 
   Licence: GNU GPL v3
   Author: Thomas Voegtlin
+  Ported by: Thomas König
   Language: Python
-  Homepage: https://electrum.org/
+  Homepage: https://electrum.fair-coin.org/
 
-
-.. image:: https://travis-ci.org/spesmilo/electrum.svg?branch=master
-    :target: https://travis-ci.org/spesmilo/electrum
-    :alt: Build Status
 
 
 1. GETTING STARTED
@@ -19,7 +16,7 @@ Electrum - lightweight Bitcoin client
 
 To run Electrum from this directory, just do::
 
-    ./electrum
+    ./electrum-fair
 
 If you install Electrum on your system, you can run it from any
 directory.
@@ -27,7 +24,7 @@ directory.
 If you have pip, you can do::
 
     python setup.py sdist
-    sudo pip install --pre dist/Electrum-2.0.tar.gz
+    sudo pip install --pre dist/ElectrumFair-2.4.tar.gz
 
 
 If you don't have pip, install with::

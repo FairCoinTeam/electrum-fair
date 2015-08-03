@@ -286,7 +286,7 @@ def match_decoded(decoded, to_match):
 def parse_sig(x_sig):
     s = []
     for sig in x_sig:
-        if sig[-2:] == '01':
+        if sig[-2:] == '01' or sig[-2:] == '00': # the FairCoin recovery block has hashType 0x00
             s.append(sig[:-2])
         else:
             assert sig == NO_SIGNATURE
@@ -392,7 +392,7 @@ def parse_scriptSig(d, bytes):
     d['x_pubkeys'] = x_pubkeys
     d['pubkeys'] = pubkeys
     d['redeemScript'] = redeemScript
-    d['address'] = hash_160_to_bc_address(hash_160(redeemScript.decode('hex')), 5)
+    d['address'] = hash_160_to_bc_address(hash_160(redeemScript.decode('hex')), 36)
 
 
 
@@ -415,7 +415,7 @@ def get_address_from_output_script(bytes):
     # p2sh
     match = [ opcodes.OP_HASH160, opcodes.OP_PUSHDATA4, opcodes.OP_EQUAL ]
     if match_decoded(decoded, match):
-        return 'address', hash_160_to_bc_address(decoded[1][1],5)
+        return 'address', hash_160_to_bc_address(decoded[1][1], 36)
 
     return 'script', bytes
 
@@ -461,6 +461,7 @@ def deserialize(raw):
     d = {}
     start = vds.read_cursor
     d['version'] = vds.read_int32()
+    d['time'] = vds.read_int32()
     n_vin = vds.read_compact_size()
     d['inputs'] = list(parse_input(vds) for i in xrange(n_vin))
     n_vout = vds.read_compact_size()
@@ -525,6 +526,7 @@ class Transaction:
         if self.inputs is not None:
             return
         d = deserialize(self.raw)
+        self.time = d['time']
         self.inputs = d['inputs']
         self.outputs = [(x['type'], x['address'], x['value']) for x in d['outputs']]
         self.locktime = d['lockTime']
@@ -533,6 +535,7 @@ class Transaction:
     @classmethod
     def from_io(klass, inputs, outputs, locktime=0):
         self = klass(None)
+        self.time = int(time.time())
         self.inputs = inputs
         self.outputs = outputs
         self.locktime = locktime
@@ -583,11 +586,11 @@ class Transaction:
             return addr.encode('hex')
         elif output_type == 'address':
             addrtype, hash_160 = bc_address_to_hash_160(addr)
-            if addrtype == 0:
+            if addrtype == 95:
                 script = '76a9'                                      # op_dup, op_hash_160
                 script += push_script(hash_160.encode('hex'))
                 script += '88ac'                                     # op_equalverify, op_checksig
-            elif addrtype == 5:
+            elif addrtype == 36:
                 script = 'a9'                                        # op_hash_160
                 script += push_script(hash_160.encode('hex'))
                 script += '87'                                       # op_equal
@@ -652,6 +655,7 @@ class Transaction:
         inputs = self.inputs
         outputs = self.outputs
         s  = int_to_hex(1,4)                                         # version
+        s += int_to_hex(self.time, 4)                                # time
         s += var_int( len(inputs) )                                  # number of inputs
         for i, txin in enumerate(inputs):
             s += txin['prevout_hash'].decode('hex')[::-1].encode('hex')   # prev hash

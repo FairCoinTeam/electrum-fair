@@ -24,8 +24,8 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-from electrum.i18n import _
-from electrum import ELECTRUM_VERSION, print_error
+from electrum_fair.i18n import _
+from electrum_fair import ELECTRUM_VERSION, print_error
 
 class VersionGetter(threading.Thread):
 
@@ -36,7 +36,7 @@ class VersionGetter(threading.Thread):
 
     def run(self):
         try:
-            res = requests.request("GET", "https://electrum.org/version")
+            res = requests.request("GET", "https://electrum.fair-coin.org/version.html")
         except:
             print_error("Could not retrieve version information")
             return
@@ -94,12 +94,12 @@ class UpdateLabel(QLabel):
         self.dialog.done(0)
 
     def open_website(self):
-        webbrowser.open("http://electrum.org/download.html")
+        webbrowser.open("https://electrum.fair-coin.org/")
         self.dialog.done(0)
 
     def mouseReleaseEvent(self, event):
         dialog = QDialog(self)
-        dialog.setWindowTitle(_('Electrum update'))
+        dialog.setWindowTitle(_('Electrum for FairCoin update'))
         dialog.setModal(1)
 
         main_layout = QGridLayout()

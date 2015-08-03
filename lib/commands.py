@@ -224,7 +224,7 @@ class Commands:
         """Create multisig address"""
         assert isinstance(pubkeys, list), (type(num), type(pubkeys))
         redeem_script = Transaction.multisig_script(pubkeys, num)
-        address = hash_160_to_bc_address(hash_160(redeem_script.decode('hex')), 5)
+        address = hash_160_to_bc_address(hash_160(redeem_script.decode('hex')), 36)
         return {'address':address, 'redeemScript':redeem_script}
 
     @command('w')
@@ -314,8 +314,8 @@ class Commands:
     @command('')
     def version(self):
         """Return the version of electrum."""
-        import electrum  # Needs to stay here to prevent ciruclar imports
-        return electrum.ELECTRUM_VERSION
+        import electrum_fair  # Needs to stay here to prevent ciruclar imports
+        return electrum_fair.ELECTRUM_VERSION
 
     @command('w')
     def getmpk(self):
@@ -600,8 +600,8 @@ class Commands:
 
 param_descriptions = {
     'privkey': 'Private key. Type \'?\' to get a prompt.',
-    'destination': 'Bitcoin address, contact or alias',
-    'address': 'Bitcoin address',
+    'destination': 'FairCoin address, contact or alias',
+    'address': 'FairCoin address',
     'seed': 'Seed phrase',
     'txid': 'Transaction ID',
     'pos': 'Position',
@@ -617,7 +617,7 @@ param_descriptions = {
 }
 
 command_options = {
-    'broadcast':   (None, "--broadcast",   "Broadcast the transaction to the Bitcoin network"),
+    'broadcast':   (None, "--broadcast",   "Broadcast the transaction to the FairCoin network"),
     'password':    ("-W", "--password",    "Password"),
     'concealed':   ("-C", "--concealed",   "Don't echo seed to console when restoring"),
     'receiving':   (None, "--receiving",   "Show only receiving addresses"),
@@ -667,10 +667,10 @@ config_variables = {
         'requests_dir': 'directory where a bip70 file will be written.',
         'ssl_privkey': 'Path to your SSL private key, needed to sign the request.',
         'ssl_chain': 'Chain of SSL certificates, needed for signed requests. Put your certificate at the top and the root CA at the end',
-        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of bitcoin: URIs. Example: \"(\'file:///var/www/\',\'https://electrum.org/\')\"',
+        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of faircoin: URIs. Example: \"(\'file:///var/www/\',\'https://electrum.org/\')\"',
     },
     'listrequests':{
-        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of bitcoin: URIs. Example: \"(\'file:///var/www/\',\'https://electrum.org/\')\"',
+        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of faircoin: URIs. Example: \"(\'file:///var/www/\',\'https://electrum.org/\')\"',
     }
 }
 
@@ -722,7 +722,7 @@ def get_parser(run_gui, run_daemon, run_cmdline):
     subparsers = parser.add_subparsers(dest='cmd', metavar='<command>')
     # gui
     parser_gui = subparsers.add_parser('gui', parents=[parent_parser], description="Run Electrum's Graphical User Interface.", help="Run GUI (default)")
-    parser_gui.add_argument("url", nargs='?', default=None, help="bitcoin URI (or bip70 file)")
+    parser_gui.add_argument("url", nargs='?', default=None, help="faircoin URI (or bip70 file)")
     parser_gui.set_defaults(func=run_gui)
     parser_gui.add_argument("-g", "--gui", dest="gui", help="select graphical user interface", choices=['qt', 'lite', 'gtk', 'text', 'stdio', 'jsonrpc'])
     parser_gui.add_argument("-m", action="store_true", dest="hide_gui", default=False, help="hide GUI on startup")

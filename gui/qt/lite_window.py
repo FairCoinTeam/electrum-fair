@@ -13,23 +13,23 @@ except ImportError:
     sys.exit(0)
 
 from decimal import Decimal as D
-from electrum.bitcoin import is_valid
-from electrum.i18n import _
+from electrum_fair.bitcoin import is_valid
+from electrum_fair.i18n import _
 import decimal
 import json
 import os.path
 import random
 import re
 import time
-from electrum.wallet import Wallet, WalletStorage
+from electrum_fair.wallet import Wallet, WalletStorage
 import webbrowser
 import history_widget_lite
 import receiving_widget
-from electrum import util
+from electrum_fair import util
 import datetime
 
-from electrum.version import ELECTRUM_VERSION as electrum_version
-from electrum.util import format_satoshis, age
+from electrum_fair.version import ELECTRUM_VERSION as electrum_version
+from electrum_fair.util import format_satoshis, age
 
 from main_window import ElectrumWindow
 import shutil
@@ -140,14 +140,14 @@ class MiniWindow(QDialog):
 
         # Bitcoin address code
         self.address_input = QLineEdit()
-        self.address_input.setPlaceholderText(_("Enter a Bitcoin address or contact"))
+        self.address_input.setPlaceholderText(_("Enter a FairCoin address or contact"))
         self.address_input.setObjectName("address_input")
 
         self.address_input.setFocusPolicy(Qt.ClickFocus)
 
         self.address_input.textChanged.connect(self.address_field_changed)
         resize_line_edit_width(self.address_input,
-                               "1BtaFUr3qVvAmwrsuDuu5zk6e4s2rxd2Gy")
+                               "fairVs8iHyLzgHQrdxb9j6hR4WGpdDbKN3")
 
         self.address_completions = QStringListModel()
         address_completer = QCompleter(self.address_input)
@@ -166,7 +166,7 @@ class MiniWindow(QDialog):
         # This is changed according to the user's displayed balance
         self.amount_validator = QDoubleValidator(self.amount_input)
         self.amount_validator.setNotation(QDoubleValidator.StandardNotation)
-        self.amount_validator.setDecimals(8)
+        self.amount_validator.setDecimals(6)
         self.amount_input.setValidator(self.amount_validator)
 
         # This removes the very ugly OSX highlighting, please leave this in :D
@@ -252,7 +252,7 @@ class MiniWindow(QDialog):
         self.toggle_receiving_layout(show_hist)
 
         self.setWindowIcon(QIcon(":icons/electrum.png"))
-        self.setWindowTitle("Electrum")
+        self.setWindowTitle("Electrum for FairCoin")
         self.setWindowFlags(Qt.Window|Qt.MSWindowsFixedSizeDialogHint)
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
         self.setObjectName("main_window")
@@ -368,7 +368,7 @@ class MiniWindow(QDialog):
         unit = self.actuator.g.base_unit()
 
         self.balance_label.set_balance_text(amount, unit, quote_text)
-        self.setWindowTitle("Electrum %s - %s %s" % (electrum_version, amount, unit))
+        self.setWindowTitle("Electrum for FairCoin %s - %s %s" % (electrum_version, amount, unit))
 
     def amount_input_changed(self, amount_text):
         """Update the number of bitcoins displayed."""
@@ -389,7 +389,7 @@ class MiniWindow(QDialog):
     def create_quote_text(self, btc_balance):
         """Return a string copy of the amount fiat currency the
         user has in bitcoins."""
-        from electrum.plugins import run_hook
+        from electrum_fair.plugins import run_hook
         r = {}
         run_hook('get_fiat_balance_text', btc_balance, r)
         return r.get(0,'')
@@ -460,7 +460,7 @@ class MiniWindow(QDialog):
 
 
     def the_website(self):
-        webbrowser.open("http://electrum.org")
+        webbrowser.open("https://electrum.fair-coin.org")
 
 
     def toggle_receiving_layout(self, toggle_state):
@@ -576,7 +576,7 @@ class ReceivePopup(QDialog):
         self.close()
 
     def setup(self, address):
-        label = QLabel(_("Copied your Bitcoin address to the clipboard!"))
+        label = QLabel(_("Copied your FairCoin address to the clipboard!"))
         address_display = QLineEdit(address)
         address_display.setReadOnly(True)
         resize_line_edit_width(address_display, address)
@@ -586,7 +586,7 @@ class ReceivePopup(QDialog):
         main_layout.addWidget(address_display)
 
         self.setMouseTracking(True)
-        self.setWindowTitle("Electrum - " + _("Receive Bitcoin payment"))
+        self.setWindowTitle("Electrum for FairCoin - " + _("Receive FairCoin payment"))
         self.setWindowFlags(Qt.Window|Qt.FramelessWindowHint|
                             Qt.MSWindowsFixedSizeDialogHint)
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
@@ -677,7 +677,7 @@ class MiniActuator:
         s.start()
         w = QDialog()
         w.resize(200, 70)
-        w.setWindowTitle('Electrum')
+        w.setWindowTitle('Electrum for FairCoin')
         l = QLabel(_('Sending transaction, please wait.'))
         vbox = QVBoxLayout()
         vbox.addWidget(l)
@@ -698,7 +698,7 @@ class MiniActuator:
 
         if dest_address is None or not is_valid(dest_address):
             QMessageBox.warning(parent_window, _('Error'),
-                _('Invalid Bitcoin Address') + ':\n' + address, _('OK'))
+                _('Invalid FairCoin Address') + ':\n' + address, _('OK'))
             return False
 
         amount = D(unicode(amount)) * (10*self.g.decimal_point)
@@ -715,9 +715,9 @@ class MiniActuator:
 
         fee = 0
         # 0.1 BTC = 10000000
-        if amount < bitcoin(1) / 10:
+        if amount < bitcoin(1):
             # 0.001 BTC
-            fee = bitcoin(1) / 1000
+            fee = bitcoin(1) / 10
 
         try:
             tx = self.g.wallet.mktx([(dest_address, amount)], password, fee)

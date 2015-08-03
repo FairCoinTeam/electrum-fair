@@ -39,12 +39,12 @@ from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 import PyQt4.QtGui as QtGui
 
-from electrum.paymentrequest import PR_UNPAID, PR_PAID, PR_EXPIRED
-from electrum.plugins import BasePlugin, hook
-from electrum import util
-from electrum.paymentrequest import PaymentRequest
-from electrum.i18n import _
-from electrum_gui.qt.util import text_dialog, EnterButton
+from electrum_fair.paymentrequest import PR_UNPAID, PR_PAID, PR_EXPIRED
+from electrum_fair.plugins import BasePlugin, hook
+from electrum_fair import util
+from electrum_fair.paymentrequest import PaymentRequest
+from electrum_fair.i18n import _
+from electrum_fair_gui.qt.util import text_dialog, EnterButton
 
 
 
@@ -73,7 +73,7 @@ class Processor(threading.Thread):
                 p = [p]
                 continue
             for item in p:
-                if item.get_content_type() == "application/bitcoin-paymentrequest":
+                if item.get_content_type() == "application/faircoin-paymentrequest":
                     pr_str = item.get_payload()
                     pr_str = base64.b64decode(pr_str)
                     self.on_receive(pr_str)
@@ -92,7 +92,7 @@ class Processor(threading.Thread):
         msg['Subject'] = message
         msg['To'] = recipient
         msg['From'] = self.username
-        part = MIMEBase('application', "bitcoin-paymentrequest")
+        part = MIMEBase('application', "faircoin-paymentrequest")
         part.set_payload(payment_request)
         Encoders.encode_base64(part)
         part.add_header('Content-Disposition', 'attachment; filename="payreq.btc"')
@@ -136,7 +136,7 @@ class Plugin(BasePlugin):
 
     @hook
     def init_qt(self, gui):
-        from electrum_gui.qt.util import ThreadedButton
+        from electrum_fair_gui.qt.util import ThreadedButton
         self.win = gui.main_window
         self.win.connect(self.win, SIGNAL('email:new_invoice'), self.new_invoice)
 
@@ -145,7 +145,7 @@ class Plugin(BasePlugin):
         menu.addAction(_("Send via e-mail"), lambda: self.send(addr))
 
     def send(self, addr):
-        from electrum import paymentrequest
+        from electrum_fair import paymentrequest
         r = self.wallet.receive_requests.get(addr)
         message = r.get('memo', '')
         if r.get('signature'):
@@ -176,7 +176,7 @@ class Plugin(BasePlugin):
         return EnterButton(_('Settings'), self.settings_dialog)
 
     def settings_dialog(self, x):
-        from electrum_gui.qt.util import Buttons, CloseButton, OkButton
+        from electrum_fair_gui.qt.util import Buttons, CloseButton, OkButton
 
         d = QDialog(self.window)
         d.setWindowTitle("Email settings")

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from electrum import SimpleConfig, set_verbosity
-from electrum.network import filter_protocol
+from electrum_fair import SimpleConfig, set_verbosity
+from electrum_fair.network import filter_protocol
 import time, Queue
 from collections import defaultdict
 

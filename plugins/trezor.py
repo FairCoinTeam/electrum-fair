@@ -9,19 +9,19 @@ import re
 from PyQt4.Qt import QMessageBox, QDialog, QVBoxLayout, QLabel, QThread, SIGNAL, QGridLayout, QInputDialog, QPushButton
 import PyQt4.QtCore as QtCore
 
-import electrum
-from electrum import bitcoin
+import electrum_fair
+from electrum_fair import bitcoin
 
-from electrum.account import BIP32_Account
-from electrum.bitcoin import EncodeBase58Check, public_key_to_bc_address, bc_address_to_hash_160, xpub_from_pubkey
-from electrum.i18n import _
-from electrum.plugins import BasePlugin, hook, always_hook, run_hook
-from electrum.transaction import Transaction, deserialize, is_extended_pubkey, x_to_xpub
-from electrum.wallet import BIP32_HD_Wallet
-from electrum.util import print_error, print_msg
-from electrum.wallet import pw_decode, bip32_private_derivation, bip32_root
+from electrum_fair.account import BIP32_Account
+from electrum_fair.bitcoin import EncodeBase58Check, public_key_to_bc_address, bc_address_to_hash_160, xpub_from_pubkey
+from electrum_fair.i18n import _
+from electrum_fair.plugins import BasePlugin, hook, always_hook, run_hook
+from electrum_fair.transaction import Transaction, deserialize, is_extended_pubkey, x_to_xpub
+from electrum_fair.wallet import BIP32_HD_Wallet
+from electrum_fair.util import print_error, print_msg
+from electrum_fair.wallet import pw_decode, bip32_private_derivation, bip32_root
 
-from electrum_gui.qt.util import *
+from electrum_fair_gui.qt.util import *
 
 try:
     from trezorlib.client import types
@@ -624,7 +624,7 @@ class TrezorQtHandler:
         self.done.set()
 
     def passphrase_dialog(self):
-        from electrum_gui.qt.password_dialog import make_password_dialog, run_password_dialog
+        from electrum_fair_gui.qt.password_dialog import make_password_dialog, run_password_dialog
         d = QDialog()
         d.setModal(1)
         d.setLayout(make_password_dialog(d, None, self.message, False))

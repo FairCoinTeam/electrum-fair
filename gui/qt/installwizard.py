@@ -6,21 +6,21 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-import electrum
-from electrum.i18n import _
-from electrum import Wallet
-from electrum import bitcoin
-from electrum import util
+import electrum_fair
+from electrum_fair.i18n import _
+from electrum_fair import Wallet
+from electrum_fair import bitcoin
+from electrum_fair import util
 
 import seed_dialog
 from network_dialog import NetworkDialog
 from util import *
 from amountedit import AmountEdit
 
-from electrum.plugins import always_hook, run_hook
-from electrum.mnemonic import prepare_seed
+from electrum_fair.plugins import always_hook, run_hook
+from electrum_fair.mnemonic import prepare_seed
 
-MSG_ENTER_ANYTHING    = _("Please enter a seed phrase, a master key, a list of Bitcoin addresses, or a list of private keys")
+MSG_ENTER_ANYTHING    = _("Please enter a seed phrase, a master key, a list of FairCoin addresses, or a list of private keys")
 MSG_SHOW_MPK          = _("Here is your master public key")
 MSG_ENTER_MPK         = _("Please enter your master public key")
 MSG_ENTER_SEED_OR_MPK = _("Please enter a seed phrase or a master key (xpub or xprv)")
@@ -73,7 +73,7 @@ class InstallWizard(QDialog):
         self.storage = storage
         self.setMinimumSize(575, 400)
         self.setMaximumSize(575, 400)
-        self.setWindowTitle('Electrum' + '  -  ' + _('Install Wizard'))
+        self.setWindowTitle('Electrum for FairCoin' + '  -  ' + _('Install Wizard'))
         self.connect(self, QtCore.SIGNAL('accept'), self.accept)
         self.stack = QStackedLayout()
         self.setLayout(self.stack)
@@ -116,7 +116,7 @@ class InstallWizard(QDialog):
         ]
 
         for i, (wtype,name) in enumerate(self.wallet_types):
-            if not filter(lambda x:x[0]==wtype, electrum.wallet.wallet_types):
+            if not filter(lambda x:x[0]==wtype, electrum_fair.wallet.wallet_types):
                 continue
             button = QRadioButton(gb2)
             button.setText(name)
@@ -201,7 +201,7 @@ class InstallWizard(QDialog):
         vbox.addStretch(1)
         button = OkButton(self, _('Next'))
         vbox.addLayout(Buttons(CancelButton(self), button))
-        button.setEnabled(False)
+        button.setEnabled(True)
         f = lambda: button.setEnabled( map(lambda e: Wallet.is_xpub(self.get_seed_text(e)), entries) == [True]*len(entries))
         for e in entries:
             e.textChanged.connect(f)
@@ -425,7 +425,7 @@ class InstallWizard(QDialog):
                 if not wallet_type:
                     return
             elif wallet_type == 'hardware':
-                hardware_wallets = map(lambda x:(x[1],x[2]), filter(lambda x:x[0]=='hardware', electrum.wallet.wallet_types))
+                hardware_wallets = map(lambda x:(x[1],x[2]), filter(lambda x:x[0]=='hardware', electrum_fair.wallet.wallet_types))
                 wallet_type = self.choice(_("Hardware Wallet"), 'Select your hardware wallet', hardware_wallets)
                 if not wallet_type:
                     return

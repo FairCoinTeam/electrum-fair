@@ -32,19 +32,19 @@ import PyQt4.QtCore as QtCore
 
 import icons_rc
 
-from electrum.bitcoin import MIN_RELAY_TX_FEE, COIN, is_valid
-from electrum.plugins import run_hook
-from electrum.i18n import _
-from electrum.util import block_explorer, block_explorer_info, block_explorer_URL
-from electrum.util import print_error, print_msg
-from electrum.util import format_satoshis, format_satoshis_plain, format_time, NotEnoughFunds, StoreDict
-from electrum import Transaction
-from electrum import mnemonic
-from electrum import util, bitcoin, commands, Wallet
-from electrum import SimpleConfig, Wallet, WalletStorage
-from electrum import Imported_Wallet
-from electrum import paymentrequest
-from electrum.contacts import Contacts
+from electrum_fair.bitcoin import MIN_RELAY_TX_FEE, COIN, is_valid
+from electrum_fair.plugins import run_hook
+from electrum_fair.i18n import _
+from electrum_fair.util import block_explorer, block_explorer_info, block_explorer_URL
+from electrum_fair.util import print_error, print_msg
+from electrum_fair.util import format_satoshis, format_satoshis_plain, format_time, NotEnoughFunds, StoreDict
+from electrum_fair import Transaction
+from electrum_fair import mnemonic
+from electrum_fair import util, bitcoin, commands, Wallet
+from electrum_fair import SimpleConfig, Wallet, WalletStorage
+from electrum_fair import Imported_Wallet
+from electrum_fair import paymentrequest
+from electrum_fair.contacts import Contacts
 
 from amountedit import AmountEdit, BTCAmountEdit, MyLineEdit
 from network_dialog import NetworkDialog
@@ -56,7 +56,7 @@ from transaction_dialog import show_transaction
 
 
 
-from electrum import ELECTRUM_VERSION
+from electrum_fair import ELECTRUM_VERSION
 import re
 
 from util import *
@@ -81,8 +81,8 @@ class StatusBarButton(QPushButton):
             self.func()
 
 
-from electrum.paymentrequest import PR_UNPAID, PR_PAID, PR_UNKNOWN, PR_EXPIRED
-from electrum.paymentrequest import PaymentRequest, InvoiceStore, get_payment_request
+from electrum_fair.paymentrequest import PR_UNPAID, PR_PAID, PR_UNKNOWN, PR_EXPIRED
+from electrum_fair.paymentrequest import PaymentRequest, InvoiceStore, get_payment_request
 
 pr_icons = {
     PR_UNPAID:":icons/unpaid.png",
@@ -127,7 +127,7 @@ class ElectrumWindow(QMainWindow):
         self.create_status_bar()
         self.need_update = threading.Event()
 
-        self.decimal_point = config.get('decimal_point', 5)
+        self.decimal_point = config.get('decimal_point', 6)
         self.num_zeros     = int(config.get('num_zeros',0))
 
         self.completions = QStringListModel()
@@ -217,7 +217,7 @@ class ElectrumWindow(QMainWindow):
         run_hook('close_wallet')
 
     def load_wallet(self, wallet):
-        import electrum
+        import electrum_fair
         self.wallet = wallet
         # backward compatibility
         self.update_wallet_format()
@@ -227,7 +227,7 @@ class ElectrumWindow(QMainWindow):
         self.dummy_address = a[0] if a else None
         self.accounts_expanded = self.wallet.storage.get('accounts_expanded',{})
         self.current_account = self.wallet.storage.get("current_account", None)
-        title = 'Electrum %s  -  %s' % (self.wallet.electrum_version, self.wallet.basename())
+        title = 'Electrum for FairCoin %s  -  %s' % (self.wallet.electrum_version, self.wallet.basename())
         if self.wallet.is_watching_only():
             title += ' [%s]' % (_('watching only'))
         self.setWindowTitle( title )
@@ -418,7 +418,7 @@ class ElectrumWindow(QMainWindow):
 
         help_menu = menubar.addMenu(_("&Help"))
         help_menu.addAction(_("&About"), self.show_about)
-        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("http://electrum.org"))
+        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("http://electrum.fair-coin.org"))
         help_menu.addSeparator()
         help_menu.addAction(_("&Documentation"), lambda: webbrowser.open("http://electrum.orain.org/")).setShortcut(QKeySequence.HelpContents)
         help_menu.addAction(_("&Report Bug"), self.show_report_bug)
@@ -426,12 +426,12 @@ class ElectrumWindow(QMainWindow):
         self.setMenuBar(menubar)
 
     def show_about(self):
-        QMessageBox.about(self, "Electrum",
-            _("Version")+" %s" % (self.wallet.electrum_version) + "\n\n" + _("Electrum's focus is speed, with low resource usage and simplifying Bitcoin. You do not need to perform regular backups, because your wallet can be recovered from a secret phrase that you can memorize or write on paper. Startup times are instant because it operates in conjunction with high-performance servers that handle the most complicated parts of the Bitcoin system."))
+        QMessageBox.about(self, "Electrum for FairCoin",
+            _("Version")+" %s" % (self.wallet.electrum_version) + "\n\n" + _("Electrum's focus is speed, with low resource usage and simplifying FairCoin. You do not need to perform regular backups, because your wallet can be recovered from a secret phrase that you can memorize or write on paper. Startup times are instant because it operates in conjunction with high-performance servers that handle the most complicated parts of the FairCoin system."))
 
     def show_report_bug(self):
-        QMessageBox.information(self, "Electrum - " + _("Reporting Bugs"),
-            _("Please report any bugs as issues on github:")+" <a href=\"https://github.com/spesmilo/electrum/issues\">https://github.com/spesmilo/electrum/issues</a>")
+        QMessageBox.information(self, "Electrum for FairCoin - " + _("Reporting Bugs"),
+            _("Please report any bugs as issues on github:")+" <a href=\"https://github.com/FairCoinTeam/electrum-fair/issues\">https://github.com/FairCoinTeam/electrum-fair/issues</a>")
 
 
     def notify_transactions(self):
@@ -463,7 +463,7 @@ class ElectrumWindow(QMainWindow):
 
     def notify(self, message):
         if self.tray:
-            self.tray.showMessage("Electrum", message, QSystemTrayIcon.Information, 20000)
+            self.tray.showMessage("Electrum for FairCoin", message, QSystemTrayIcon.Information, 20000)
 
 
 
@@ -507,13 +507,13 @@ class ElectrumWindow(QMainWindow):
         return self.decimal_point
 
     def base_unit(self):
-        assert self.decimal_point in [2, 5, 8]
+        assert self.decimal_point in [2, 4, 6]
         if self.decimal_point == 2:
             return 'bits'
-        if self.decimal_point == 5:
-            return 'mBTC'
-        if self.decimal_point == 8:
-            return 'BTC'
+        if self.decimal_point == 4:
+            return 'mFAIR'
+        if self.decimal_point == 6:
+            return 'FAIR'
         raise Exception('Unknown base unit')
 
     def update_status(self):
@@ -601,7 +601,7 @@ class ElectrumWindow(QMainWindow):
         self.receive_address_e = ButtonsLineEdit()
         self.receive_address_e.addCopyButton(self.app)
         self.receive_address_e.setReadOnly(True)
-        msg = _('Bitcoin address where the payment should be received. Note that each payment request uses a different Bitcoin address.')
+        msg = _('FairCoin address where the payment should be received. Note that each payment request uses a different FairCoin address.')
         self.receive_address_label = HelpLabel(_('Receiving address'), msg)
         self.receive_address_e.textChanged.connect(self.update_receive_qr)
         self.receive_address_e.setFocusPolicy(Qt.NoFocus)
@@ -624,7 +624,7 @@ class ElectrumWindow(QMainWindow):
         msg = ' '.join([
             _('Expiration date of your request.'),
             _('This information is seen by the recipient if you send them a signed payment request.'),
-            _('Expired requests have to be deleted manually from your list, in order to free the corresponding Bitcoin addresses'),
+            _('Expired requests have to be deleted manually from your list, in order to free the corresponding FairCoin addresses'),
         ])
         grid.addWidget(HelpLabel(_('Expires in'), msg), 3, 0)
         grid.addWidget(self.expires_combo, 3, 1)
@@ -924,7 +924,7 @@ class ElectrumWindow(QMainWindow):
         self.amount_e = BTCAmountEdit(self.get_decimal_point)
         self.payto_e = PayToEdit(self)
         msg = _('Recipient of the funds.') + '\n\n'\
-              + _('You may enter a Bitcoin address, a label from your list of contacts (a list of completions will be proposed), or an alias (email-like address that forwards to a Bitcoin address)')
+              + _('You may enter a FairCoin address, a label from your list of contacts (a list of completions will be proposed), or an alias (email-like address that forwards to a FairCoin address)')
         payto_label = HelpLabel(_('Pay to'), msg)
         grid.addWidget(payto_label, 1, 0)
         grid.addWidget(self.payto_e, 1, 1, 1, 3)
@@ -957,7 +957,7 @@ class ElectrumWindow(QMainWindow):
         grid.addWidget(amount_label, 4, 0)
         grid.addWidget(self.amount_e, 4, 1, 1, 2)
 
-        msg = _('Bitcoin transactions are in general not free. A transaction fee is paid by the sender of the funds.') + '\n\n'\
+        msg = _('FairCoin transactions are in general not free. A transaction fee is paid by the sender of the funds.') + '\n\n'\
               + _('The amount of fee can be decided freely by the sender. However, transactions with low fees take more time to be processed.') + '\n\n'\
               + _('A suggested fee is automatically added to this field. You may override it. The suggested fee increases with the size of the transaction.')
         self.fee_e_label = HelpLabel(_('Fee'), msg)
@@ -1162,10 +1162,10 @@ class ElectrumWindow(QMainWindow):
 
         for _type, addr, amount in outputs:
             if addr is None:
-                QMessageBox.warning(self, _('Error'), _('Bitcoin Address is None'), _('OK'))
+                QMessageBox.warning(self, _('Error'), _('FairCoin Address is None'), _('OK'))
                 return
             if _type == 'address' and not bitcoin.is_address(addr):
-                QMessageBox.warning(self, _('Error'), _('Invalid Bitcoin Address'), _('OK'))
+                QMessageBox.warning(self, _('Error'), _('Invalid FairCoin Address'), _('OK'))
                 return
             if amount is None:
                 QMessageBox.warning(self, _('Error'), _('Invalid Amount'), _('OK'))
@@ -1340,7 +1340,7 @@ class ElectrumWindow(QMainWindow):
         try:
             out = util.parse_URI(unicode(URI))
         except Exception as e:
-            QMessageBox.warning(self, _('Error'), _('Invalid bitcoin URI:') + '\n' + str(e), _('OK'))
+            QMessageBox.warning(self, _('Error'), _('Invalid FairCoin URI:') + '\n' + str(e), _('OK'))
             return
         self.tabs.setCurrentIndex(1)
 
@@ -1350,7 +1350,7 @@ class ElectrumWindow(QMainWindow):
         if r or (name and sig):
             def get_payment_request_thread():
                 if name and sig:
-                    from electrum import paymentrequest
+                    from electrum_fair import paymentrequest
                     pr = paymentrequest.serialize_request(out).SerializeToString()
                     self.payment_request = paymentrequest.PaymentRequest(pr)
                 else:
@@ -1873,7 +1873,7 @@ class ElectrumWindow(QMainWindow):
         vbox.addWidget(QLabel(_('Account name')+':'))
         e = QLineEdit()
         vbox.addWidget(e)
-        msg = _("Note: Newly created accounts are 'pending' until they receive bitcoins.") + " " \
+        msg = _("Note: Newly created accounts are 'pending' until they receive FairCoins.") + " " \
             + _("You will need to wait for 2 confirmations until the correct balance is displayed and more addresses are created for that account.")
         l = QLabel(msg)
         l.setWordWrap(True)
@@ -2196,7 +2196,7 @@ class ElectrumWindow(QMainWindow):
 
 
     def read_tx_from_qrcode(self):
-        from electrum import qrscanner
+        from electrum_fair import qrscanner
         try:
             data = qrscanner.scan_qr(self.config)
         except BaseException, e:
@@ -2205,7 +2205,7 @@ class ElectrumWindow(QMainWindow):
         if not data:
             return
         # if the user scanned a bitcoin URI
-        if data.startswith("bitcoin:"):
+        if data.startswith("faircoin:"):
             self.pay_to_URI(data)
             return
         # else if the user scanned an offline signed tx
@@ -2246,7 +2246,7 @@ class ElectrumWindow(QMainWindow):
             self.show_transaction(tx)
 
     def do_process_from_txid(self):
-        from electrum import transaction
+        from electrum_fair import transaction
         txid, ok = QInputDialog.getText(self, _('Lookup transaction'), _('Transaction ID') + ':')
         if ok and txid:
             r = self.network.synchronous_get([ ('blockchain.transaction.get',[str(txid)]) ])[0]
@@ -2528,7 +2528,7 @@ class ElectrumWindow(QMainWindow):
         lang_help = _('Select which language is used in the GUI (after restart).')
         lang_label = HelpLabel(_('Language') + ':', lang_help)
         lang_combo = QComboBox()
-        from electrum.i18n import languages
+        from electrum_fair.i18n import languages
         lang_combo.addItems(languages.values())
         try:
             index = languages.keys().index(self.config.get("language",''))
@@ -2620,9 +2620,9 @@ class ElectrumWindow(QMainWindow):
         SSL_key_e.editingFinished.connect(lambda: self.config.set_key('ssl_key', str(SSL_key_e.text())))
         id_widgets.append((SSL_key_label, SSL_key_e))
 
-        units = ['BTC', 'mBTC', 'bits']
+        units = ['FAIR', 'mFAIR', 'uFAIR']
         msg = _('Base unit of your wallet.')\
-              + '\n1BTC=1000mBTC.\n' \
+              + '\n1FAIR=1000mFAIR.\n' \
               + _(' These settings affects the fields in the Send tab')+' '
         unit_label = HelpLabel(_('Base unit') + ':', msg)
         unit_combo = QComboBox()
@@ -2632,11 +2632,11 @@ class ElectrumWindow(QMainWindow):
             unit_result = units[unit_combo.currentIndex()]
             if self.base_unit() == unit_result:
                 return
-            if unit_result == 'BTC':
-                self.decimal_point = 8
-            elif unit_result == 'mBTC':
-                self.decimal_point = 5
-            elif unit_result == 'bits':
+            if unit_result == 'FAIR':
+                self.decimal_point = 6
+            elif unit_result == 'mFAIR':
+                self.decimal_point = 4
+            elif unit_result == 'uFAIR':
                 self.decimal_point = 2
             else:
                 raise Exception('Unknown base unit')
@@ -2661,7 +2661,7 @@ class ElectrumWindow(QMainWindow):
         block_ex_combo.currentIndexChanged.connect(on_be)
         gui_widgets.append((block_ex_label, block_ex_combo))
 
-        from electrum import qrscanner
+        from electrum_fair import qrscanner
         system_cameras = qrscanner._find_system_cameras()
         qr_combo = QComboBox()
         qr_combo.addItem("Default","default")
@@ -2754,7 +2754,7 @@ class ElectrumWindow(QMainWindow):
 
 
     def plugins_dialog(self):
-        from electrum.plugins import plugins, descriptions, is_available, loader
+        from electrum_fair.plugins import plugins, descriptions, is_available, loader
 
         self.pluginsdialog = d = QDialog(self)
         d.setWindowTitle(_('Electrum Plugins'))
@@ -2852,7 +2852,7 @@ class ElectrumWindow(QMainWindow):
 
     @protected
     def create_csr(self, alias, challenge, password):
-        from electrum import x509
+        from electrum_fair import x509
         import tlslite
         xprv = self.wallet.get_master_private_key(self.wallet.root_name, password)
         _, _, _, c, k = bitcoin.deserialize_xkey(xprv)
