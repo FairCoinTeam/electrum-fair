@@ -1,3 +1,21 @@
+Electrum-fair - Lightweight Faircoin client
+===========================================
+
+
+This is the master branch of electrum-fair which is updated with spesmilo/electrum. So it's not ported to Faircoin, it's only the branch to keep updated with that repo.
+
+If you want to git clone the most recent and stable port to Faircoin, please select the 2.3.3 branch:
+
+  https://github.com/FairCoinTeam/electrum-fair/tree/2.3.3
+
+If you want install last stable Electrum-fair from pip packages, please visit:
+
+  https://electrum.fair-coin.org
+
+The rest of this README document is updated with spesmilo/electrum repo, so it not refers to Electrum-fair
+
+
+
 Electrum - Lightweight Bitcoin client
 =====================================
 
