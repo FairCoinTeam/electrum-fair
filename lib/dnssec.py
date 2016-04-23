@@ -3,18 +3,25 @@
 # Electrum - lightweight Bitcoin client
 # Copyright (C) 2015 Thomas Voegtlin
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 
 
@@ -57,15 +64,15 @@ from dns.exception import DNSException
 
 """
 Pure-Python version of dns.dnssec._validate_rsig
-Uses tlslite instead of PyCrypto
 """
+
+import ecdsa
+import rsakey
+
+
 def python_validate_rrsig(rrset, rrsig, keys, origin=None, now=None):
     from dns.dnssec import ValidationFailure, ECDSAP256SHA256, ECDSAP384SHA384
     from dns.dnssec import _find_candidate_keys, _make_hash, _is_ecdsa, _is_rsa, _to_rdata, _make_algorithm_id
-
-    import ecdsa
-    from tlslite.utils.keyfactory import _createPublicRSAKey
-    from tlslite.utils.cryptomath import bytesToNumber
 
     if isinstance(origin, (str, unicode)):
         origin = dns.name.from_text(origin, dns.name.root)
@@ -101,9 +108,9 @@ def python_validate_rrsig(rrset, rrsig, keys, origin=None, now=None):
                 keyptr = keyptr[2:]
             rsa_e = keyptr[0:bytes]
             rsa_n = keyptr[bytes:]
-            n = bytesToNumber(bytearray(rsa_n))
-            e = bytesToNumber(bytearray(rsa_e))
-            pubkey = _createPublicRSAKey(n, e)
+            n = ecdsa.util.string_to_number(rsa_n)
+            e = ecdsa.util.string_to_number(rsa_e)
+            pubkey = rsakey.RSAKey(n, e)
             sig = rrsig.signature
 
         elif _is_ecdsa(rrsig.algorithm):
