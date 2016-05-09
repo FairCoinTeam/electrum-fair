@@ -170,9 +170,9 @@ class Test_keyImport(unittest.TestCase):
     """ The keys used in this class are TEST keys from
         https://en.bitcoin.it/wiki/BIP_0032_TestVectors"""
 
-    private_key = "L52XzL2cMkHxqxBXRyEpnPQZGUs3uKiL3R11XbAdHigRzDozKZeW"
-    public_key_hex = "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2"
-    main_address = "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
+    private_key = "8UyKH4BhF6u9V1vf3fS2NiZCDgo6sPCTvPMPprySe85QkeB6nsq"
+    public_key_hex = "04bb1349017f2755e096fde8272eb8c54f8b6aaac7ea8f66179d48d2ae00daba4f3e57c9b8b941008d374a93459f412f78605f84f26997c043da5e641be5b0b7f3"
+    main_address = "fEmyvKL7juirsHa5qcG7PrDDbs1uJznKga"
 
     def test_public_key_from_private_key(self):
         result = public_key_from_private_key(self.private_key)

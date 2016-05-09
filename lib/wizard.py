@@ -23,8 +23,8 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from electrum import WalletStorage
-from electrum.plugins import run_hook
+from electrum_fair import WalletStorage
+from electrum_fair.plugins import run_hook
 from util import PrintError
 from wallet import Wallet
 from i18n import _

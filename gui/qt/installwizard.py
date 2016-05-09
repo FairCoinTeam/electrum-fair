@@ -4,18 +4,18 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-import electrum
-from electrum.i18n import _
+import electrum_fair
+from electrum_fair.i18n import _
 
 from seed_dialog import SeedDisplayLayout, SeedWarningLayout, SeedInputLayout
 from network_dialog import NetworkChoiceLayout
 from util import *
 from password_dialog import PasswordLayout, PW_NEW, PW_PASSPHRASE
 
-from electrum.wallet import Wallet
-from electrum.mnemonic import prepare_seed
-from electrum.util import UserCancelled
-from electrum.wizard import (WizardBase,
+from electrum_fair.wallet import Wallet
+from electrum_fair.mnemonic import prepare_seed
+from electrum_fair.util import UserCancelled
+from electrum_fair.wizard import (WizardBase,
                              MSG_ENTER_PASSWORD, MSG_RESTORE_PASSPHRASE,
                              MSG_COSIGNER, MSG_ENTER_SEED_OR_MPK,
                              MSG_SHOW_MPK, MSG_VERIFY_SEED,
@@ -68,7 +68,7 @@ class InstallWizard(QDialog, MessageBoxMixin, WizardBase):
 
     def __init__(self, config, app, plugins):
         QDialog.__init__(self, None)
-        self.setWindowTitle('Electrum  -  ' + _('Install Wizard'))
+        self.setWindowTitle('Electrum for FairCoin  -  ' + _('Install Wizard'))
         self.app = app
         self.config = config
         # Set for base base class
@@ -259,7 +259,7 @@ class InstallWizard(QDialog, MessageBoxMixin, WizardBase):
 
         actions = [_("Create a new wallet"),
                    _("Restore a wallet or import keys")]
-        title = _("Electrum could not find an existing wallet.")
+        title = _("Electrum for FairCoin could not find an existing wallet.")
         actions_clayout = ChoicesLayout(_("What do you want to do?"), actions)
         wallet_clayout = ChoicesLayout(_("Wallet kind:"), wallet_kinds)
 
@@ -274,7 +274,7 @@ class InstallWizard(QDialog, MessageBoxMixin, WizardBase):
     def query_hw_wallet_choice(self, msg, action, choices):
         actions = [_("Initialize a new or wiped device"),
                    _("Use a device you have already set up"),
-                   _("Restore Electrum wallet from device seed words")]
+                   _("Restore Electrum for FairCoin wallet from device seed words")]
         default_action = 1 if action == 'create' else 2
         actions_clayout = ChoicesLayout(_("What do you want to do?"), actions,
                                         checked_index=default_action)
@@ -334,10 +334,10 @@ class InstallWizard(QDialog, MessageBoxMixin, WizardBase):
         return get_texts()
 
     def choose_server(self, network):
-        title = _("Electrum communicates with remote servers to get "
+        title = _("Electrum for FairCoin communicates with remote servers to get "
                   "information about your transactions and addresses. The "
                   "servers all fulfil the same purpose only differing in "
-                  "hardware. In most cases you simply want to let Electrum "
+                  "hardware. In most cases you simply want to let Electrum for FairCoin "
                   "pick one at random.  However if you prefer feel free to "
                   "select a server manually.")
         choices = [_("Auto connect"), _("Select server manually")]

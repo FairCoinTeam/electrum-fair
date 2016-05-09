@@ -43,9 +43,9 @@ class Plugins(DaemonThread):
         DaemonThread.__init__(self)
         if is_local:
             find = imp.find_module('plugins')
-            plugins = imp.load_module('electrum_plugins', *find)
+            plugins = imp.load_module('electrum_fair_plugins', *find)
         else:
-            plugins = __import__('electrum_plugins')
+            plugins = __import__('electrum_fair_plugins')
         self.pkgpath = os.path.dirname(plugins.__file__)
         self.config = config
         self.hw_wallets = {}

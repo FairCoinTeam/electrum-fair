@@ -3,13 +3,13 @@ from struct import unpack
 import hashlib
 import time
 
-import electrum
-from electrum.bitcoin import EncodeBase58Check, DecodeBase58Check, TYPE_ADDRESS
-from electrum.i18n import _
-from electrum.plugins import BasePlugin, hook
+import electrum_fair
+from electrum_fair.bitcoin import EncodeBase58Check, DecodeBase58Check, TYPE_ADDRESS
+from electrum_fair.i18n import _
+from electrum_fair.plugins import BasePlugin, hook
 from ..hw_wallet import BIP44_HW_Wallet
 from ..hw_wallet import HW_PluginBase
-from electrum.util import format_satoshis_plain, print_error
+from electrum_fair.util import format_satoshis_plain, print_error
 
 
 try:

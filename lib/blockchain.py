@@ -36,7 +36,7 @@ class Blockchain(util.PrintError):
     def __init__(self, config, network):
         self.config = config
         self.network = network
-        self.headers_url = "https://headers.electrum.org/blockchain_headers"
+        self.headers_url = "https://chain.fair-coin.org/download/electrum_headers"
         self.local_height = 0
         self.set_local_height()
 

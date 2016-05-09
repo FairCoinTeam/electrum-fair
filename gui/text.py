@@ -2,10 +2,10 @@ import tty, sys
 import curses, datetime, locale
 from decimal import Decimal
 
-from electrum.util import format_satoshis, set_verbosity
-from electrum.util import StoreDict
-from electrum.bitcoin import is_valid, COIN, TYPE_ADDRESS
-from electrum import Wallet, WalletStorage
+from electrum_fair.util import format_satoshis, set_verbosity
+from electrum_fair.util import StoreDict
+from electrum_fair.bitcoin import is_valid, COIN, TYPE_ADDRESS
+from electrum_fair import Wallet, WalletStorage
 
 _ = lambda x:x
 
@@ -19,7 +19,7 @@ class ElectrumGui:
         self.network = daemon.network
         storage = WalletStorage(config.get_wallet_path())
         if not storage.file_exists:
-            print "Wallet not found. try 'electrum create'"
+            print "Wallet not found. try 'electrum-fair create'"
             exit()
 
         self.wallet = Wallet(storage)
