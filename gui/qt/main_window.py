@@ -126,7 +126,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.create_status_bar()
         self.need_update = threading.Event()
 
-        self.decimal_point = config.get('decimal_point', 5)
+        self.decimal_point = config.get('decimal_point', 6)
         self.num_zeros     = int(config.get('num_zeros',0))
 
         self.completions = QStringListModel()
@@ -2743,7 +2743,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
                 self.decimal_point = 6
             elif unit_result == 'mFAIR':
                 self.decimal_point = 4
-            elif unit_result == 'bits':
+            elif unit_result == 'uFAIR':
                 self.decimal_point = 2
             else:
                 raise Exception('Unknown base unit')
