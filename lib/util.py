@@ -254,7 +254,7 @@ def format_satoshis_plain(x, decimal_point = 6):
     scale_factor = pow(10, decimal_point)
     return "{:.6f}".format(Decimal(x) / scale_factor).rstrip('0').rstrip('.')
 
-def format_satoshis(x, is_diff=False, num_zeros = 0, decimal_point = 8, whitespaces=False):
+def format_satoshis(x, is_diff=False, num_zeros = 0, decimal_point = 6, whitespaces=False):
     from locale import localeconv
     if x is None:
         return 'unknown'
