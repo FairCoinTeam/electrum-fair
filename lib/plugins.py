@@ -86,7 +86,7 @@ class Plugins(DaemonThread):
         return len(self.plugins)
 
     def load_plugin(self, name):
-        full_name = 'electrum_plugins.' + name + '.' + self.gui_name
+        full_name = 'electrum_fair_plugins.' + name + '.' + self.gui_name
         loader = pkgutil.find_loader(full_name)
         if not loader:
             raise RuntimeError("%s implementation for %s plugin not found"

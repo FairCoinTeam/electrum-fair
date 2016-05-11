@@ -36,14 +36,14 @@ from electrum_fair import transaction
 from electrum_fair.plugins import BasePlugin, hook
 from electrum_fair.i18n import _
 
-from electrum_gui.qt.transaction_dialog import show_transaction
+from electrum_fair_gui.qt.transaction_dialog import show_transaction
 
 import sys
 import traceback
 
 
 PORT = 12344
-HOST = 'ecdsa.net'
+HOST = 'cosigner-pool.fair-coin.org'
 server = xmlrpclib.ServerProxy('http://%s:%d'%(HOST,PORT), allow_none=True)
 
 

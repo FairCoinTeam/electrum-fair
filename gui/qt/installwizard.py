@@ -108,7 +108,7 @@ class InstallWizard(QDialog, MessageBoxMixin, WizardBase):
         hbox.setStretchFactor(inner_vbox, 1)
         outer_vbox.addLayout(hbox)
         outer_vbox.addLayout(Buttons(self.cancel_button, self.next_button))
-        self.set_icon(':icons/electrum.png')
+        self.set_icon(':icons/electrum_fair.png')
         self.show()
         self.raise_()
         self.refresh_gui()  # Need for QT on MacOSX.  Lame.
