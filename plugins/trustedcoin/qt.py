@@ -31,18 +31,18 @@ from decimal import Decimal
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from electrum_gui.qt.util import *
-from electrum_gui.qt.qrcodewidget import QRCodeWidget
-from electrum_gui.qt.amountedit import AmountEdit
-from electrum_gui.qt.main_window import StatusBarButton
-from electrum.i18n import _
-from electrum.plugins import hook
-from electrum import wizard
+from electrum_fair_gui.qt.util import *
+from electrum_fair_gui.qt.qrcodewidget import QRCodeWidget
+from electrum_fair_gui.qt.amountedit import AmountEdit
+from electrum_fair_gui.qt.main_window import StatusBarButton
+from electrum_fair.i18n import _
+from electrum_fair.plugins import hook
+from electrum_fair import wizard
 
 from trustedcoin import TrustedCoinPlugin, DISCLAIMER, server
 
 def need_server(wallet, tx):
-    from electrum.account import BIP32_Account
+    from electrum_fair.account import BIP32_Account
     # Detect if the server is needed
     long_id, short_id = wallet.get_user_id()
     xpub3 = wallet.master_public_keys['x3/']

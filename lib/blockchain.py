@@ -36,7 +36,7 @@ class Blockchain(util.PrintError):
     def __init__(self, config, network):
         self.config = config
         self.network = network
-        self.headers_url = "https://headers.electrum.org/blockchain_headers"
+        self.headers_url = "https://chain.fair-coin.org/download/electrum_headers"
         self.local_height = 0
         self.set_local_height()
 
@@ -48,20 +48,20 @@ class Blockchain(util.PrintError):
         self.set_local_height()
         self.print_error("%d blocks" % self.local_height)
 
-    def verify_header(self, header, prev_header, bits, target):
+    def verify_header(self, header, prev_header): #, bits, target):
         prev_hash = self.hash_header(prev_header)
         assert prev_hash == header.get('prev_block_hash'), "prev hash mismatch: %s vs %s" % (prev_hash, header.get('prev_block_hash'))
-        assert bits == header.get('bits'), "bits mismatch: %s vs %s" % (bits, header.get('bits'))
-        _hash = self.hash_header(header)
-        assert int('0x' + _hash, 16) <= target, "insufficient proof of work: %s vs target %s" % (int('0x' + _hash, 16), target)
+        #assert bits == header.get('bits'), "bits mismatch: %s vs %s" % (bits, header.get('bits'))
+        #_hash = self.hash_header(header)
+        #assert int('0x' + _hash, 16) <= target, "insufficient proof of work: %s vs target %s" % (int('0x' + _hash, 16), target)
 
     def verify_chain(self, chain):
         first_header = chain[0]
         prev_header = self.read_header(first_header.get('block_height') - 1)
         for header in chain:
             height = header.get('block_height')
-            bits, target = self.get_target(height / 2016, chain)
-            self.verify_header(header, prev_header, bits, target)
+            #bits, target = self.get_target(height / 2016, chain)
+            self.verify_header(header, prev_header) #, bits, target)
             prev_header = header
 
     def verify_chunk(self, index, data):
@@ -69,11 +69,11 @@ class Blockchain(util.PrintError):
         prev_header = None
         if index != 0:
             prev_header = self.read_header(index*2016 - 1)
-        bits, target = self.get_target(index)
+        #bits, target = self.get_target(index)
         for i in range(num):
             raw_header = data[i*80:(i+1) * 80]
             header = self.deserialize_header(raw_header)
-            self.verify_header(header, prev_header, bits, target)
+            self.verify_header(header, prev_header) #, bits, target)
             prev_header = header
 
     def serialize_header(self, res):

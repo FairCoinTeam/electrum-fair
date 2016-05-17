@@ -5,13 +5,13 @@ import threading
 from binascii import unhexlify
 from functools import partial
 
-from electrum.account import BIP32_Account
-from electrum.bitcoin import (bc_address_to_hash_160, xpub_from_pubkey,
+from electrum_fair.account import BIP32_Account
+from electrum_fair.bitcoin import (bc_address_to_hash_160, xpub_from_pubkey,
                               public_key_to_bc_address, EncodeBase58Check,
                               TYPE_ADDRESS)
-from electrum.i18n import _
-from electrum.plugins import BasePlugin, hook
-from electrum.transaction import (deserialize, is_extended_pubkey,
+from electrum_fair.i18n import _
+from electrum_fair.plugins import BasePlugin, hook
+from electrum_fair.transaction import (deserialize, is_extended_pubkey,
                                   Transaction, x_to_xpub)
 from ..hw_wallet import BIP44_HW_Wallet, HW_PluginBase
 

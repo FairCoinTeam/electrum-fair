@@ -13,8 +13,8 @@ from kivy.properties import ObjectProperty, StringProperty, OptionProperty
 from kivy.core.window import Window
 from kivy.uix.button import Button
 
-from electrum_gui.kivy.uix.dialogs import EventsDialog
-from electrum_gui.kivy.i18n import _
+from electrum_fair_gui.kivy.uix.dialogs import EventsDialog
+from electrum_fair_gui.kivy.i18n import _
 
 
 Builder.load_string('''
@@ -451,8 +451,8 @@ class RestoreSeedDialog(WizardDialog):
     def __init__(self, **kwargs):
         super(RestoreSeedDialog, self).__init__(**kwargs)
         self._test = kwargs['test']
-        from electrum.mnemonic import Mnemonic
-        from electrum.old_mnemonic import words as old_wordlist
+        from electrum_fair.mnemonic import Mnemonic
+        from electrum_fair.old_mnemonic import words as old_wordlist
         self.words = set(Mnemonic('en').wordlist).union(set(old_wordlist))
 
     def get_suggestions(self, prefix):

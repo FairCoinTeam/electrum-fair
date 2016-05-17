@@ -2,7 +2,7 @@ Electrum-fair - Lightweight Faircoin client
 ===========================================
 
 
-This is the master branch of electrum-fair which is updated with spesmilo/electrum. So it's not ported to Faircoin, it's only the branch to keep updated with that repo.
+This is the 2.6.4 branch of electrum-fair which is an alpha version.
 
 If you want to git clone the most recent and stable port to Faircoin, please select the 2.3.3 branch:
 
@@ -12,12 +12,6 @@ If you want install last stable Electrum-fair from pip packages, please visit:
 
   https://electrum.fair-coin.org
 
-The rest of this README document is updated with spesmilo/electrum repo, so it not refers to Electrum-fair
-
-
-
-Electrum - Lightweight Bitcoin client
-=====================================
 
 ::
 
@@ -27,18 +21,11 @@ Electrum - Lightweight Bitcoin client
   Homepage: https://electrum.org/
 
 
-.. image:: https://travis-ci.org/spesmilo/electrum.svg?branch=master
-    :target: https://travis-ci.org/spesmilo/electrum
-    :alt: Build Status
-
-
-
-
 
 Getting started
 ===============
 
-Electrum is a pure python application. However, if you want to use the
+Electrum for FairCoin is a pure python application. However, if you want to use the
 Qt interface, then you need to install the Qt dependencies::
 
     sudo apt-get install python-qt4
@@ -48,7 +35,7 @@ Electrum from its root directory, without installing it on your
 system; all the python dependencies are included in the 'packages'
 directory. To run Electrum from its root directory, just do::
 
-    ./electrum
+    ./electrum-fair
 
 If you cloned the git repository, then you need to compile extra files
 before you can run Electrum. Read the next section, "Development
@@ -61,8 +48,8 @@ Development version
 
 Check out the code from Github::
 
-    git clone git://github.com/spesmilo/electrum.git
-    cd electrum
+    git clone git://github.com/FairCoinTeam/electrum-fair.git
+    cd electrum-fair
 
 Run install (this should install dependencies)::
 
@@ -94,7 +81,7 @@ directory.
 If you have pip, you can do::
 
     python setup.py sdist
-    sudo pip install --pre dist/Electrum-2.0.tar.gz
+    sudo pip install --pre dist/ElectrumFair-2.0.tar.gz
 
 
 If you don't have pip, install with::

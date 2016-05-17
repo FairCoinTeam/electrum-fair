@@ -36,15 +36,15 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import PyQt4.QtCore as QtCore
 
-from electrum.i18n import _, set_language
-from electrum.plugins import run_hook
-from electrum import SimpleConfig, Wallet, WalletStorage
-from electrum.paymentrequest import InvoiceStore
-from electrum.contacts import Contacts
-from electrum.synchronizer import Synchronizer
-from electrum.verifier import SPV
-from electrum.util import DebugMem
-from electrum.wallet import Abstract_Wallet
+from electrum_fair.i18n import _, set_language
+from electrum_fair.plugins import run_hook
+from electrum_fair import SimpleConfig, Wallet, WalletStorage
+from electrum_fair.paymentrequest import InvoiceStore
+from electrum_fair.contacts import Contacts
+from electrum_fair.synchronizer import Synchronizer
+from electrum_fair.verifier import SPV
+from electrum_fair.util import DebugMem
+from electrum_fair.wallet import Abstract_Wallet
 from installwizard import InstallWizard
 
 

@@ -3,8 +3,8 @@ from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 
-from electrum.bitcoin import RECOMMENDED_FEE
-from electrum_gui.kivy.i18n import _
+from electrum_fair.bitcoin import RECOMMENDED_FEE
+from electrum_fair_gui.kivy.i18n import _
 
 Builder.load_string('''
 <FeeDialog@Popup>
